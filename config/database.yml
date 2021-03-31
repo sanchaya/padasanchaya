@@ -13,8 +13,8 @@ default: &default
   adapter: mysql2
   encoding: utf8
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  username: root
-  password: root
+  username: pada_kanaja
+  password: qasDhgs@hsk
   # socket: /tmp/mysql.sock
 
 development:
@@ -49,10 +49,13 @@ test:
 #
 production:
   <<: *default
-  database: pada_kanaja_production
+  database: pada_kanaja
   username: pada_kanaja
-  password: <%= ENV['PADA_KANAJA_DATABASE_PASSWORD'] %>
+  password: qasDhgs@hsk
 
 pada_kanaja_db:
   <<: *default
   database: pada_kanaja
+
+
+

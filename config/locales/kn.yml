@@ -20,11 +20,10 @@ kn:
   country: 'ದೇಶ'
   language: 'ಭಾಷೆ'
   published_date: 'ಪ್ರಕಟವಾದ ದಿನಾಂಕ'
-  pada_kanaja: "ಪದ ಕಣಜ"
   word: "ಪದ"
   meaning: "ಅರ್ಥ"
   dictionary: "ಪದಕೋಶ"
-
+  pada_kanaja: 'ಪದ ಸಂಚಯ'
   # Home
   book: 'ಪುಸ್ತಕ'
   books: 'ಪುಸ್ತಕಗಳು'
@@ -34,7 +33,7 @@ kn:
   authors: 'ಲೇಖಕ/ಕಿಯರು'
   library: 'ಲೈಬ್ರರಿ'
   libraries: 'ಲೈಬ್ರರಿಗಳು'
-  # library: 'ಪುಸ್ತಕ ಭಂಡಾರ'
+
   # Books
   author: 'ಲೇಖಕ'
   book_title: 'ಪುಸ್ತಕದ ಹೆಸರು'
@@ -43,5 +42,5 @@ kn:
   english: 'ಇಂಗ್ಲೀಷ್'
 
   # Heading text
-  search_heading: 'ಕನ್ನಡ ನಿಘಂಟುಗಳ ಕಣಜ'
+  search_heading: 'ಕನ್ನಡ ನಿಘಂಟುಗಳ ಸಂಚಯ'
   search_sub_heading: 'ಕನ್ನಡದ ಪದಗಳ ಅರ್ಥ, ಬಳಕೆ, ಇತ್ಯಾದಿಗಳ ಹುಡುಕಿಗೆ ಮೊದಲಾಗಿ'

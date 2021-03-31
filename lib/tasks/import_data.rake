@@ -81,3 +81,55 @@ task :import_gv_eng_kan_csv => :environment do
      Pada.create(word: row[0], meaning: row[2], dictionary_id: dictionary.id, pos: row[1], language_id: eng_lan.id, meaning_language_id: kan_lan.id)
   end
 end
+
+
+# description of task
+desc 'Import csv to padakanaja table'
+# rake task name. Here "import_csv"
+task import_krp_pa_csv: :environment do
+
+  # CSV File path
+  file_name = Rails.root.to_s+'/lib/krp_pa.csv'
+  puts 'started'
+  # Read from CSV which has header with coma separated
+  CSV.foreach(file_name, col_sep: ',', headers: true) do |row|
+    # insert into Padas table by matching CSV row values.
+    # Make sure we have created Dictionary and dictionary_id is already present in DB,
+    # before running this format as we are creating with Dictionary_id
+    Pada.create(word: row['word'], meaning: row['meaning'],
+                dictionary_id: row['dictionary_id'],
+                pos: row['pos'], language_id: row['language_id'],
+                meaning_language_id: row['meaning_language_id'])
+    puts row['word']
+    puts row['meaning']
+    puts '>>>>>>>>>>>>>..'
+  end
+  puts 'End '
+
+end
+
+
+# description of task
+desc 'Import csv to padakanaja table'
+# rake task name. Here "import_csv"
+task import_dasa_padakosha_csv: :environment do
+
+  # CSV File path
+  file_name = Rails.root.to_s+'/lib/daasa_sahitya.csv'
+  puts 'started'
+  # Read from CSV which has header with coma separated
+  CSV.foreach(file_name, col_sep: ',', headers: true) do |row|
+    # insert into Padas table by matching CSV row values.
+    # Make sure we have created Dictionary and dictionary_id is already present in DB,
+    # before running this format as we are creating with Dictionary_id
+    Pada.create(word: row['word'], meaning: row['meaning'],
+                dictionary_id: row['dictionary_id'],
+                pos: row['pos'], language_id: row['language_id'],
+                meaning_language_id: row['meaning_language_id'])
+    puts row['word']
+    puts row['meaning']
+    puts '>>>>>>>>>>>>>..'
+  end
+  puts 'End '
+
+end
