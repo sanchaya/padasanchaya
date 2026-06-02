@@ -21,6 +21,13 @@
     <div class="col-md-5">
       <% if @meanings %>
         <%= render "pada_meaning" %>
+      <% elsif @random_pada %>
+        <div class="main-meaning-section">
+          <h4> <i> '<%= @random_pada.word %>' </i>  ಪದದ ಅರ್ಥ</h4>
+          <p> <span class="word-meaning"> <%= @random_pada.meaning %> </span> </p>
+          <p> <span class="word-description"> <%= @random_pada.pos %> </span> </p>
+          <div class="dictionary-underline" style="border-bottom: 3px solid <%= dictionary_color(@random_pada.dictionary_id) %>"></div>
+        </div>
       <% end %>
     </div>
     <div class="col-md-4">

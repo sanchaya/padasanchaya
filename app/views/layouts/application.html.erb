@@ -19,12 +19,13 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a href="<%= root_path %> " class="navbar-brand">
+          <a href="<%= root_path %>" class="navbar-brand">
+            <img src="https://vachana.sanchaya.net/app-icon-light.png" alt="<%= t(:pada_kanaja) %>" class="header-logo-img">
             <%= t(:pada_kanaja) %>
           </a>
           <div class="navbar-collapse collapse navbar-responsive-collapse">
             <ul class="nav navbar-nav">
-              <li> <%= link_to t(:about_us), '#' %> </li>
+              <li> <%= link_to t(:about_us), about_path %> </li>
               <li> <%= link_to t(:help), '#' %> </li>
               <li> <%= link_to t(:contact), '#' %> </li>
             </ul>
@@ -46,10 +47,15 @@
         <footer class="footer">
           <div class="container">
               <div class="copy-right">
-                © 2018  <a href="htts://sanchaya.org" target="_blank"> ಕನ್ನಡ ಸಂಚಯ  </a>| ಸಾಹಿತ್ಯ ಸಂಶೋಧನೆ ಹಾಗೂ ಅಧ್ಯಯನ ವೇದಿಕೆ
+                This portal is a collection of various Kannada dictionaries, created to provide comprehensive access to Kannada lexical resources as a not-for-profit initiative.
+
+The Kannada community is invited to contribute to this project and help make it a comprehensive digital dictionary for all. Wherever available, licensing information for the dictionaries will be displayed.
+
+We are actively seeking permission to include additional dictionaries in this portal. The community is hereby requested to help us connect with the respective owners and rights holders of dictionaries that could be added to this collection.
+                <p style="font-size: 11px; margin-top: 0.5em; margin-bottom: 0;">Since 2010 - Sanchaya &amp; Sanchi Foundation</p>
               </div>
           </div>
-        </footer>  
+        </footer>
     </div>
   </body>
 </html>

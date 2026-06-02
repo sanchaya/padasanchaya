@@ -7,12 +7,21 @@ class PadasController < ApplicationController
     if params[:search] && !params[:search].blank?
       @meanings = Pada.search(params[:search])
       @similar_meanings = Pada.similar_search(params[:search]).exclude_word_ids(@meanings.pluck('id')).limit(10)
+
+      # Search Wiktionary separately
+      @wiktionary_meanings = WiktionaryEntry.search(params[:search])
+      @wiktionary_similar = WiktionaryEntry.similar_search(params[:search]).where.not(id: @wiktionary_meanings.pluck(:id)).limit(10)
+    else
+      @random_pada = Pada.order("RAND()").first
     end
   end
 
   # GET /padas/1
   # GET /padas/1.json
   def show
+  end
+
+  def about
   end
 
   # GET /padas/new

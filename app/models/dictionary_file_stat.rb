@@ -1,0 +1,2 @@
+class DictionaryFileStat < ApplicationRecord
+end

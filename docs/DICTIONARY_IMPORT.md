@@ -1,0 +1,144 @@
+# Dictionary Import Guide
+
+This document describes how dictionary data is imported and managed in Padakannaja.
+
+## Overview
+
+The application supports three types of dictionaries:
+1. **Old/Legacy Dictionaries** (IDs 1-10) - Pre-existing before ZIP import
+2. **ZIP Dictionaries** (IDs 11-121) - Imported from `padakanaja_dictionaries.zip`
+3. **Kannada Wiktionary** - Imported from kn.wiktionary.org (see WIKTIONARY_IMPORT.md)
+
+## ZIP Dictionary Import
+
+### Source File
+
+- **File**: `padakanaja_dictionaries.zip` (in Rails root)
+- **Format**: ZIP archive containing CSV files
+- **Total dictionaries**: 92
+- **Total entries**: 593,113
+
+### CSV Format
+
+Each CSV file contains rows with these columns:
+- `dict_id` - Dictionary ID
+- `dict_name` - Dictionary name in Kannada
+- `dict_english_name` - English name
+- `kannada_word` - Word in Kannada
+- `english_word` - Word in English
+- `kannada_meaning`, `english_meaning` - Meanings
+- `synonyms`, `subject`, `grammar`, `department` - Additional metadata
+
+### Import Steps
+
+#### 1. Import into dictionary_entries (raw data)
+
+```bash
+rails dictionaries:import RAILS_ENV=production
+```
+
+This:
+- Extracts each CSV from the ZIP
+- Creates/updates records in `dictionary_entries` table
+- Tracks per-file statistics in `dictionary_file_stats`
+
+#### 2. Import into padas (searchable format)
+
+```bash
+rails dictionaries:import_into_padas RAILS_ENV=production
+```
+
+This:
+- Groups entries by `dict_id`
+- Creates `Dictionary` records if not present
+- Creates `Pada` records (word, meaning, pos, dictionary_id)
+- Links to existing language IDs (1=Kannada, 2=English)
+
+## Data Architecture
+
+### Tables
+
+**dictionary_entries** - Raw imported data
+```
++ id, dict_id, dict_name, dict_english_name
++ kannada_word, english_word, kannada_meaning, english_meaning
++ synonyms, subject, grammar, department
++ timestamps
+```
+
+**dictionary_file_stats** - Import tracking
+```
++ file_name, table_name, dict_id
++ dict_name, dict_english_name, total_entries
++ source_file_path, timestamps
+```
+
+**padas** - Searchable normalized data
+```
++ word, meaning, pos, language_id, meaning_language_id, dictionary_id
+```
+
+**dictionaries** - Dictionary metadata
+```
++ name, description, timestamps
+```
+
+### Dictionary ID Ranges
+
+| Range | Type | Count |
+|-------|------|-------|
+| 1-10 | Old/Legacy | 10 (pre-existing) |
+| 11-121 | ZIP Dictionaries | 92 (from ZIP file) |
+| 122+ | Wiktionary | Separate table |
+
+## Stats Page
+
+The `/stats` page aggregates data from all sources:
+
+- **ZIP Dictionaries**: Count from `dictionary_file_stats`
+- **Old Dictionaries**: Count from `dictionaries` (IDs 1-10)
+- **Wiktionary**: Count from `wiktionary_entries`
+- **Overall Total**: `padas.count + dictionary_entries.count + wiktionary_entries.count`
+
+## Legacy Import Rake Tasks
+
+Several legacy rake tasks exist in `lib/tasks/`:
+
+- `dictionary_import.rake` - Main ZIP import to `dictionary_entries`
+- `import_into_padas.rake` - Maps ZIP data to `padas`
+- `integrate_dictionaries.rake` - Integration helper
+- `fix_all_names.rake` - Name fixing utility
+
+## Known Issues
+
+### Overlapping Dictionary IDs
+Old dictionaries (IDs 1-78) may overlap with ZIP dictionary IDs if IDs were reused. The stats controller only counts old dictionaries as IDs 1-10 to avoid confusion.
+
+### Duplicate Padas
+If a dictionary is re-imported, duplicate `padas` rows may be created. Use the import tasks' deduplication logic, or clean up manually:
+
+```sql
+-- Remove exact duplicates (keeping lowest id)
+DELETE p1 FROM padas p1
+INNER JOIN padas p2
+WHERE p1.id > p2.id
+  AND p1.word = p2.word
+  AND p1.meaning = p2.meaning
+  AND p1.dictionary_id = p2.dictionary_id;
+```
+
+## FAQ
+
+**Q: Can I re-import the ZIP file?**
+A: Yes. Running `rails dictionaries:import` will update existing entries and add new ones.
+
+**Q: The stats page shows wrong numbers for old dictionaries.**
+A: After mixing old and ZIP data in `padas`, IDs 11-78 may contain mixed data. The stats controller filters to only show IDs 1-10 as "old dictionaries."
+
+**Q: How do I clean up old overlapping dictionaries?**
+A: Delete `padas` where `dictionary_id` is between 11-78, then re-import:
+```sql
+DELETE FROM padas WHERE dictionary_id BETWEEN 11 AND 78;
+DELETE FROM dictionaries WHERE id BETWEEN 11 AND 78;
+```
+Then run `rails dictionaries:import_into_padas`.

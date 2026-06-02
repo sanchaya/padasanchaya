@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 	root "padas#index"
+  get 'stats', to: 'stats#index'
+  get 'about', to: 'padas#about'
   # resources :padas
   # resources :dictionaries
   # resources :languages

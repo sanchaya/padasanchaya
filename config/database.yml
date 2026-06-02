@@ -13,6 +13,7 @@ default: &default
   adapter: mysql2
   encoding: utf8
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  database: pada_kanaja
   username: pada_kanaja
   password: qasDhgs@hsk
   # socket: /tmp/mysql.sock
@@ -38,7 +39,7 @@ test:
 # production deployment.
 #
 # On Heroku and other platform providers, you may have a full connection URL
-# available as an environment variable. For example:
+# available as a environment variable. For example:
 #
 #   DATABASE_URL="mysql2://myuser:mypass@localhost/somedatabase"
 #
@@ -48,6 +49,13 @@ test:
 #     url: <%= ENV['DATABASE_URL'] %>
 #
 production:
+  <<: *default
+  database: pada_kanaja
+  username: pada_kanaja
+  #password: <%= ENV['PADA_KANAJA_DATABASE_PASSWORD'] %>
+  password: qasDhgs@hsk
+
+pada_kanaja_db:
   <<: *default
   database: pada_kanaja
   username: pada_kanaja
