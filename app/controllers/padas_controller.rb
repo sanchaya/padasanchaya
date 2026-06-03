@@ -5,14 +5,49 @@ class PadasController < ApplicationController
   # GET /padas.json
   def index
     if params[:search] && !params[:search].blank?
-      @meanings = Pada.search(params[:search])
+      @page_title = "#{params[:search]} - #{@page_title}"
+      @page_description = "ಕನ್ನಡ ಪದ '#{params[:search]}' ನ ಅರ್ಥ, ವ್ಯಾಖ್ಯಾನ, ಬಳಕೆ ಮತ್ತು ಹೆಚ್ಚಿನ ಮಾಹಿತಿ. ಅನೇಕ ಕನ್ನಡ ನಿಘಂಟುಗಳಲ್ಲಿ ಹುಡುಕಿ."
+      @canonical_url = root_url(search: params[:search])
+      @breadcrumb_json = '{"@type":"ListItem","position":2,"name":"' + params[:search] + ' - ಹುಡುಕಾಟ ಫಲಿತಾಂಶಗಳು","item":"' + @canonical_url + '"}'
+      # Step 1: Search exact word matches first
+      all_meanings = Pada.search(params[:search])
+      @meaning_only_results = false
+      
+      # Step 2: If no word matches, also search in meanings
+      if all_meanings.count == 0
+        all_meanings = Pada.search_by_meaning(params[:search]).limit(10)
+        @meaning_only_results = true
+      end
+      
+      # Identify special dictionary IDs (Vachana Sanchaya, Alar, etc.)
+      vachana_dict = Dictionary.where('name LIKE ?', '%vachana%').first
+      alar_dict = Dictionary.find_by(id: 35)
+      
+      special_ids = []
+      special_ids << vachana_dict.id if vachana_dict
+      special_ids << alar_dict.id if alar_dict
+      
+      if special_ids.any?
+        @vachana_meanings = vachana_dict ? all_meanings.select { |m| m.dictionary_id == vachana_dict.id } : []
+        @alar_meanings = alar_dict ? all_meanings.select { |m| m.dictionary_id == alar_dict.id } : []
+        @meanings = all_meanings.reject { |m| special_ids.include?(m.dictionary_id) }
+      else
+        @meanings = all_meanings
+        @vachana_meanings = []
+        @alar_meanings = []
+      end
+      
       @similar_meanings = Pada.similar_search(params[:search]).exclude_word_ids(@meanings.pluck('id')).limit(10)
-
+      
       # Search Wiktionary separately
       @wiktionary_meanings = WiktionaryEntry.search(params[:search])
       @wiktionary_similar = WiktionaryEntry.similar_search(params[:search]).where.not(id: @wiktionary_meanings.pluck(:id)).limit(10)
+      
+      # Search JanaSanchaya community dictionary
+      @jana_sanchaya_meanings = JanaSanchayaEntry.search(params[:search]).ranked
+      @jana_sanchaya_similar = JanaSanchayaEntry.similar_search(params[:search]).where.not(id: @jana_sanchaya_meanings.pluck(:id)).ranked.limit(5)
     else
-      @random_pada = Pada.order("RAND()").first
+      @random_pada = Pada.where("word NOT REGEXP '^[0-9]+$'").order("RAND()").first
     end
   end
 
@@ -22,6 +57,15 @@ class PadasController < ApplicationController
   end
 
   def about
+    @page_title = 'ನಮ್ಮ ಬಗ್ಗೆ - ಪದ ಸಂಚಯ'
+    @page_description = 'ಕನ್ನಡ ನಿಘಂಟುಗಳ ಸಂಚಯ ಯೋಜನೆಯ ಬಗ್ಗೆ. ಕನ್ನಡ ಭಾಷೆ ಮತ್ತು ತಂತ್ರಜ್ಞಾನ ಕ್ಷೇತ್ರದಲ್ಲಿ ಸಂಶೋಧನೆ ಮತ್ತು ಅಭಿವೃದ್ಧಿ.'
+    @breadcrumb_json = '{"@type":"ListItem","position":2,"name":"ನಮ್ಮ ಬಗ್ಗೆ","item":"https://pada.sanchaya.net/about"}'
+  end
+
+  def help
+    @page_title = 'ಸಹಾಯ - ಪದ ಸಂಚಯ'
+    @page_description = 'ಪದ ಸಂಚಯ ಕನ್ನಡ ನಿಘಂಟನ್ನು ಹೇಗೆ ಬಳಸುವುದು ಎಂಬುದರ ಮಾರ್ಗದರ್ಶಿ. ಪದ ಹುಡುಕಾಟ, ಸಮುದಾಯ ನಿಘಂಟು, ಮತದಾನ ಮತ್ತು ಹೆಚ್ಚಿನ ಮಾಹಿತಿ.'
+    @breadcrumb_json = '{"@type":"ListItem","position":2,"name":"ಸಹಾಯ","item":"https://pada.sanchaya.net/help"}'
   end
 
   # GET /padas/new

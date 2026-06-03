@@ -1,59 +1,55 @@
-<h1>ಪದಕೋಶ (Dictionary) Statistics</h1>
+<h1>ಪದ ಸಂಚಯ - ಅಂಕಿಅಂಶಗಳು (Statistics)</h1>
 
 <div class="stats-summary">
-  <p><strong>Total Dictionaries in ZIP:</strong> <%= @total_zip_dictionaries || 0 %></p>
-  <p><strong>Existing Old Dictionaries:</strong> <%= @total_old_dictionaries || 0 %></p>
+  <p><strong>Total Dictionaries:</strong> <%= @total_dictionaries %></p>
   <p><strong>Wiktionary Entries:</strong> <%= number_with_delimiter(@wiktionary_count || 0) %></p>
-  <p><strong>Grand Total Items in ZIP (dictionary_entries):</strong> <%= number_with_delimiter(@grand_total_items || 0) %></p>
-  <p><strong>Total Old Dictionary Entries (padas):</strong> <%= number_with_delimiter(@total_old_entries || 0) %></p>
-  <p><strong>Over all number of entries:</strong> <%= number_with_delimiter(@total_entries || 0) %></p>
+  <p><strong>Vachana Sanchaya:</strong> <%= number_with_delimiter(@vachana_count || 0) %></p>
+  <p><strong>Total Entries (Padas):</strong> <%= number_with_delimiter(@total_all_entries || 0) %></p>
 </div>
 
-<h3>Imported Dictionaries (from padakanaja_dictionaries.zip)</h3>
+<h3>All Dictionaries</h3>
 <table border="1" cellpadding="5" style="border-collapse: collapse; width: 100%; margin-bottom: 30px;">
   <thead style="background-color: #e7f3ff;">
     <tr>
-      <th>Dict ID</th>
+      <th>ID</th>
       <th>Dictionary Name</th>
+      <th>Publisher</th>
+      <th>Year</th>
       <th>Total Items</th>
     </tr>
   </thead>
   <tbody>
-    <% if @zip_dictionary_stats.present? %>
-      <% @zip_dictionary_stats.each do |stat| %>
-        <tr style="border-left: 4px solid <%= %w[#e74c3c #e67e22 #f1c40f #2ecc71 #3498db #9b59b6 #1abc9c #e91e63 #ff5722 #607d8b][(stat.dict_id || 0) % 10] %>;">
-          <td><%= stat.dict_id %></td>
-          <td><%= stat.dict_name %></td>
-          <td align="right"><%= number_with_delimiter(stat.total_entries) %></td>
+    <% if @dictionaries.present? %>
+      <% @dictionaries.each do |dict| %>
+        <tr style="border-left: 4px solid <%= %w[#e74c3c #e67e22 #f1c40f #2ecc71 #3498db #9b59b6 #1abc9c #e91e63 #ff5722 #607d8b][(dict.id || 0) % 10] %>;">
+          <td><%= dict.id %></td>
+          <td><%= dict.name %></td>
+          <td><%= dict.publisher.presence || '-' %></td>
+          <td><%= dict.published_year || '-' %></td>
+          <td align="right"><%= number_with_delimiter(dict.pada_count) %></td>
         </tr>
       <% end %>
     <% else %>
-      <tr><td colspan="3" align="center">No ZIP dictionary statistics available.</td></tr>
+      <tr><td colspan="5" align="center">No dictionaries found.</td></tr>
     <% end %>
   </tbody>
 </table>
 
-<h3>Existing Old Dictionaries (IDs 1-10, pre-existing)</h3>
+<h3>Vachana Sanchaya</h3>
 <table border="1" cellpadding="5" style="border-collapse: collapse; width: 100%; margin-bottom: 30px;">
-  <thead style="background-color: #fff3e0;">
+  <thead style="background-color: #e8f5e9;">
     <tr>
-      <th>ID</th>
-      <th>Dictionary Name</th>
-      <th>Total Items</th>
+      <th>Source</th>
+      <th>Total Entries</th>
+      <th>Link</th>
     </tr>
   </thead>
   <tbody>
-    <% if @old_dictionaries.present? %>
-      <% @old_dictionaries.each do |dict| %>
-        <tr style="border-left: 4px solid <%= %w[#e74c3c #e67e22 #f1c40f #2ecc71 #3498db #9b59b6 #1abc9c #e91e63 #ff5722 #607d8b][dict.id % 10] %>;">
-          <td><%= dict.id %></td>
-          <td><%= dict.name || 'N/A' %></td>
-          <td align="right"><%= number_with_delimiter(@old_entries[dict.id] || 0) %></td>
-        </tr>
-      <% end %>
-    <% else %>
-      <tr><td colspan="3" align="center">No old dictionaries found.</td></tr>
-    <% end %>
+    <tr style="border-left: 4px solid #2ecc71;">
+      <td>Vachana Sanchaya Glossary</td>
+      <td align="right"><%= number_with_delimiter(@vachana_count || 0) %></td>
+      <td><a href="https://vachana.sanchaya.net" target="_blank" rel="noopener">vachana.sanchaya.net</a></td>
+    </tr>
   </tbody>
 </table>
 
@@ -76,6 +72,5 @@
 </table>
 
 <p style="margin-top: 20px; font-size: 12px; color: #666;">
-  ZIP dictionaries have IDs 11-121. Old dictionaries have IDs 1-10. Wiktionary entries are imported from kn.wiktionary.org.
+  Wiktionary entries from kn.wiktionary.org. Vachana Sanchaya from vachana.sanchaya.net.
 </p>
-

@@ -1,0 +1,240 @@
+<div class="contribute-page" style="max-width: 800px; margin: 0 auto;">
+  <h1 style="color: #e65100; margin-bottom: 5px; font-size: 24px;">
+    <span class="glyphicon glyphicon-hand-right"></span> ಸಮುದಾಯ ನಿಘಂಟಿಗೆ ಸೇರಿಸಿ
+  </h1>
+  <p style="font-size: 14px; color: #666; margin-bottom: 20px;">
+    ಕನ್ನಡ ಮತ್ತು ಅದರ ಎಲ್ಲಾ ಉಪಭಾಷೆಗಳ ಪದಗಳನ್ನು ಸಮುದಾಯ ನಿಘಂಟಿಗೆ ಸೇರಿಸಿ. 
+    ಪದ, ಅರ್ಥ, ವ್ಯಾಕರಣ, ಉಪಭಾಷೆ, ಪರಿಸರ ಕ್ಷೇತ್ರ ಮುಂತಾದ ಮಾಹಿತಿಗಳನ್ನು ನೀಡಬಹುದು.
+    ನಿಮ್ಮ ಕೊಡುಗೆ ಈ ನಿಘಂಟನ್ನು ಶ್ರೀಮಂತಗೊಳಿಸುತ್ತದೆ.
+  </p>
+
+  <%= form_with model: @entry, url: jana_sanchaya_entries_path, method: :post, local: true, html: { class: 'contribute-form' } do |f| %>
+
+    <%# --- Basic word info --- %>
+    <div style="background: #f9f9f9; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+      <h5 style="margin-top: 0; color: #333;">1. ಮೂಲ ಪದದ ಮಾಹಿತಿ</h5>
+      <div class="form-group">
+        <%= f.label :word, 'ಪದ (Word) *', style: 'font-weight: bold;' %>
+        <%= f.text_field :word, class: 'form-control kan-ime', required: true, placeholder: 'ಕನ್ನಡದಲ್ಲಿ ಪದವನ್ನು ನಮೂದಿಸಿ', style: 'font-size: 16px;' %>
+      </div>
+      <div class="form-group">
+        <%= f.label :transliteration, 'ಲಿಪ್ಯಂತರಣ (Transliteration)', style: 'font-weight: bold;' %>
+        <%= f.text_field :transliteration, class: 'form-control', placeholder: 'ಉದಾ: mara, mane, oDi' %>
+        <small style="color: #888;">ಆಂಗ್ಲ ಲಿಪಿಯಲ್ಲಿ ಪದದ ಉಚ್ಚಾರಣೆ</small>
+      </div>
+      <div class="form-group">
+        <%= f.label :meaning, 'ಅರ್ಥ (Meaning in Kannada) *', style: 'font-weight: bold;' %>
+        <%= f.text_area :meaning, class: 'form-control', rows: 2, required: true, placeholder: 'ಕನ್ನಡದಲ್ಲಿ ಅರ್ಥ ಬರೆಯಿರಿ', style: 'font-size: 16px;' %>
+      </div>
+      <div class="form-group">
+        <%= f.label :meaning_in_english, 'ಇಂಗ್ಲೀಷ್ ಅರ್ಥ (Meaning in English)', style: 'font-weight: bold;' %>
+        <%= f.text_area :meaning_in_english, class: 'form-control', rows: 2, placeholder: 'Meaning in English' %>
+      </div>
+      <div class="form-group">
+        <%= f.label :pos, 'ಪದವರ್ಗ (Part of Speech)', style: 'font-weight: bold;' %>
+        <%= f.select :pos, options_for_select(JanaSanchayaEntry::POS_TYPES, @entry.pos), { prompt: 'ಆಯ್ಕೆ ಮಾಡಿ' }, class: 'form-control' %>
+      </div>
+    </div>
+
+    <%# --- Thesaurus info --- %>
+    <div style="background: #f0f8ff; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+      <h5 style="margin-top: 0; color: #1565c0;">2. ಶಬ್ದಕೋಶ ವಿಸ್ತರಣೆ (Thesaurus)</h5>
+      <p style="font-size: 13px; color: #555;">ಪದದ ಸಮಾನಾರ್ಥಕ, ವಿರುದ್ಧಾರ್ಥಕ ಮತ್ತು ಬಳಕೆಯ ಉದಾಹರಣೆಗಳು</p>
+      <div class="form-group">
+        <%= f.label :synonyms, 'ಪರ್ಯಾಯ ಪದಗಳು (Synonyms)', style: 'font-weight: bold;' %>
+        <%= f.text_area :synonyms, class: 'form-control', rows: 2, placeholder: 'ಅರ್ಥದಲ್ಲಿ ಸಮಾನವಾದ ಪದಗಳನ್ನು ಅಲ್ಪವಿರಾಮದಿಂದ ಪ್ರತ್ಯೇಕಿಸಿ ಬರೆಯಿರಿ. ಉದಾ: ನೀರು, ಜಲ, ಉದಕ, ಪಾನೀಯ' %>
+      </div>
+      <div class="form-group">
+        <%= f.label :antonyms, 'ವಿರುದ್ಧಾರ್ಥಕ ಪದಗಳು (Antonyms)', style: 'font-weight: bold;' %>
+        <%= f.text_area :antonyms, class: 'form-control', rows: 2, placeholder: 'ವಿರುದ್ಧ ಅರ್ಥದ ಪದಗಳು. ಉದಾ: ಹಗಲು ↔ ರಾತ್ರಿ' %>
+      </div>
+      <div class="form-group">
+        <%= f.label :usage_example, 'ಬಳಕೆಯ ಉದಾಹರಣೆ (Usage Example)', style: 'font-weight: bold;' %>
+        <%= f.text_area :usage_example, class: 'form-control', rows: 2, placeholder: 'ಈ ಪದವನ್ನು ವಾಕ್ಯದಲ್ಲಿ ಹೇಗೆ ಬಳಸುವಿರಿ? ಉದಾ: "ಮರದ ನೆರಳಿನಲ್ಲಿ ಹಸುರು ಹುಲ್ಲು ಬೆಳೆದಿತ್ತು."' %>
+      </div>
+    </div>
+
+    <%# --- Etymology section --- %>
+    <div style="background: #fce4ec; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+      <h5 style="margin-top: 0; color: #c62828;">3. ವ್ಯುತ್ಪತ್ತಿ (Etymology)</h5>
+      <p style="font-size: 13px; color: #555;">
+        ಪದದ ಮೂಲ, ಬೇರಿನ ಭಾಷೆ, ಸಹಜ ಪದಗಳು — ಇದು ಐತಿಹಾಸಿಕ ಭಾಷಾಶಾಸ್ತ್ರದ ದೃಷ್ಟಿಯಿಂದ ಮುಖ್ಯ.
+      </p>
+      <div class="form-group">
+        <%= f.label :root_language, 'ಮೂಲ ಭಾಷೆ (Root Language)', style: 'font-weight: bold;' %>
+        <%= f.select :root_language, options_for_select(JanaSanchayaEntry::ROOT_LANGUAGES, @entry.root_language), { prompt: 'ಪದ ಯಾವ ಭಾಷೆಯಿಂದ ಬಂದಿದೆ?' }, class: 'form-control' %>
+        <small style="color: #888;">ಉದಾ: ಸಂಸ್ಕೃತ, ಪಾಳಿ, ಪ್ರಾಕೃತ, ಪಾರಸಿ, ಅರಬಿಕ್, ಇಂಗ್ಲೀಷ್, ಪೋರ್ಚುಗೀಸ್, ದ್ರಾವಿಡ, ತಮಿಳು, ತೆಲುಗು, ತುಳು, ದೇಶ್ಯ...</small>
+      </div>
+      <div class="form-group">
+        <%= f.label :root_word, 'ಮೂಲ ಪದ (Root Word)', style: 'font-weight: bold;' %>
+        <%= f.text_field :root_word, class: 'form-control', placeholder: 'ಮೂಲ ಭಾಷೆಯಲ್ಲಿ ಪದದ ಮೂಲ ರೂಪ. ಉದಾ: ಕರ್ಮ (ಸಂಸ್ಕೃತ) → ಕಮ್ಮ (ಕನ್ನಡ)' %>
+        <small style="color: #888;">ಮೂಲ ಭಾಷೆಯಲ್ಲಿನ ಪದದ ನಿಜವಾದ ರೂಪ</small>
+      </div>
+      <div class="form-group">
+        <%= f.label :cognates, 'ಸಹಜ ಪದಗಳು (Cognates)', style: 'font-weight: bold;' %>
+        <%= f.text_area :cognates, class: 'form-control', rows: 2, placeholder: 'ದ್ರಾವಿಡ ಭಾಷೆಗಳಲ್ಲಿನ ಸಂಬಂಧಿತ ಪದಗಳು. ಉದಾ: ತಮಿಳು: கல் (kal), ತೆಲುಗು: కల్లు (kallu), ಮಲಯಾಳಂ: കല്ല് (kall)' %>
+        <small style="color: #888;">ಇತರ ದ್ರಾವಿಡ ಭಾಷೆಗಳಲ್ಲಿ (ತಮಿಳು, ತೆಲುಗು, ಮಲಯಾಳಂ, ತುಳು) ಇದೇ ಮೂಲದ ಪದಗಳು</small>
+      </div>
+      <div class="form-group">
+        <%= f.label :etymology, 'ವ್ಯುತ್ಪತ್ತಿ ಟಿಪ್ಪಣಿಗಳು (Etymology Notes)', style: 'font-weight: bold;' %>
+        <%= f.text_area :etymology, class: 'form-control', rows: 2, placeholder: 'ಪದ ಹೇಗೆ ವಿಕಾಸವಾಯಿತು ಎಂಬ ವಿವರಣೆ. ಉದಾ: ಸಂಸ್ಕೃತ "ಕರ್ಮ" → ಪ್ರಾಕೃತ "ಕಮ್ಮ" → ಕನ್ನಡ "ಕಮ್ಮ"...' %>
+        <small style="color: #888;">ಪದದ ಐತಿಹಾಸಿಕ ವಿಕಾಸದ ವಿವರವಾದ ಟಿಪ್ಪಣಿ</small>
+      </div>
+    </div>
+
+    <%# --- Dialect info --- %>
+    <div style="background: #fff8e1; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+      <h5 style="margin-top: 0; color: #f57f17;">4. ಉಪಭಾಷೆ ಮಾಹಿತಿ (Dialect Information)</h5>
+      <p style="font-size: 13px; color: #555;">ಈ ಪದವು ಯಾವುದಾದರೂ ಉಪಭಾಷೆಗೆ ಸೇರಿದ್ದಾದರೆ, ದಯವಿಟ್ಟು ಗುರುತಿಸಿ</p>
+      <div class="checkbox">
+        <label style="font-size: 14px; font-weight: bold;">
+          <%= f.check_box :is_dialect %> ಇದು ಉಪಭಾಷೆಯ ಪದವಾಗಿದೆ
+        </label>
+      </div>
+      <div class="form-group">
+        <%= f.label :dialect_id, 'ಉಪಭಾಷೆಯ ಹೆಸರು (Dialect Name)', style: 'font-weight: bold;' %>
+        <%= f.collection_select :dialect_id, Dialect.alphabetical, :id, :kannada_name, { prompt: 'ಆಯ್ಕೆ ಮಾಡಿ' }, class: 'form-control' %>
+        <small style="color: #888;">ಪಟ್ಟಿಯಲ್ಲಿ ಇಲ್ಲದಿದ್ದರೆ ಕೆಳಗೆ ಟೈಪ್ ಮಾಡಿ</small>
+        <%= f.text_field :dialect_name, class: 'form-control', style: 'margin-top: 8px;', placeholder: 'ಇಲ್ಲಿ ನೇರವಾಗಿ ಟೈಪ್ ಮಾಡಬಹುದು (ಪಟ್ಟಿಯಲ್ಲಿ ಇಲ್ಲದಿದ್ದರೆ)' %>
+      </div>
+      <div class="form-group">
+        <%= f.label :dialect_place, 'ಉಪಭಾಷೆಯ ಪ್ರದೇಶ (Where is this dialect spoken?)', style: 'font-weight: bold;' %>
+        <%= f.text_field :dialect_place, class: 'form-control', placeholder: 'ಉದಾ: ದಕ್ಷಿಣ ಕನ್ನಡ, ಉತ್ತರ ಕನ್ನಡ, ಬೆಳಗಾವಿ, ಕೊಡಗು...' %>
+        <small style="color: #888;">ಈ ಉಪಭಾಷೆಯನ್ನು ಯಾವ ಊರು/ಜಿಲ್ಲೆ/ಪ್ರಾಂತ್ಯದಲ್ಲಿ ಮಾತನಾಡುತ್ತಾರೆ?</small>
+      </div>
+    </div>
+
+    <%# --- Ecological domain --- %>
+    <div style="background: #e8f5e9; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+      <h5 style="margin-top: 0; color: #2e7d32;">5. ಪರಿಸರ ಕ್ಷೇತ್ರ (Ecological Domain)</h5>
+      <p style="font-size: 13px; color: #555;">
+        ಈ ಪದವು ಯಾವ ಪರಿಸರ/ವಿಷಯ ಕ್ಷೇತ್ರಕ್ಕೆ ಸಂಬಂಧಿಸಿದೆ? (ಕೃಷಿ, ಕಾಡು, ನೀರು, ಸಸ್ಯ, ಪ್ರಾಣಿ, ಋತು, ಇತ್ಯಾದಿ)
+      </p>
+      <div class="form-group">
+        <%= f.label :ecological_domain, 'ಪರಿಸರ ಕ್ಷೇತ್ರ', style: 'font-weight: bold;' %>
+        <%= f.select :ecological_domain, options_for_select(JanaSanchayaEntry::ECOLOGICAL_DOMAINS, @entry.ecological_domain), { prompt: 'ಆಯ್ಕೆ ಮಾಡಿ' }, class: 'form-control' %>
+      </div>
+      <div class="form-group">
+        <%= f.label :cultural_notes, 'ಸಾಂಸ್ಕೃತಿಕ/ಪರಿಸರ ಟಿಪ್ಪಣಿಗಳು (Cultural & Ecological Notes)', style: 'font-weight: bold;' %>
+        <%= f.text_area :cultural_notes, class: 'form-control', rows: 3, placeholder: 'ಈ ಪದಕ್ಕೆ ಸಂಬಂಧಿಸಿದ ಸಾಂಸ್ಕೃತಿಕ, ಪರಿಸರ, ಅಥವಾ ಸಂಪ್ರದಾಯಿಕ ಮಾಹಿತಿ. ಉದಾ: ಈ ಗಿಡದ ಎಲೆಗಳನ್ನು ಹಬ್ಬಗಳಲ್ಲಿ ಬಳಸುತ್ತಾರೆ...' %>
+      </div>
+    </div>
+
+    <%# --- Contributor info --- %>
+    <div style="background: #f3e5f5; padding: 20px; border-radius: 8px; margin-bottom: 25px;">
+      <h5 style="margin-top: 0; color: #7b1fa2;">6. ಕೊಡುಗೆದಾರರ ಮಾಹಿತಿ (Contributor Information)</h5>
+      <p style="font-size: 13px; color: #555;">ನಿಮ್ಮ ಮಾಹಿತಿ ಐಚ್ಛಿಕ. ಆದರೆ ಇದು ನಿಘಂಟಿನ ವಿಶ್ವಾಸಾರ್ಹತೆ ಹೆಚ್ಚಿಸುತ್ತದೆ.</p>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <%= f.label :contributor_name, 'ಹೆಸರು (Name)', style: 'font-weight: bold;' %>
+            <%= f.text_field :contributor_name, class: 'form-control', placeholder: 'ನಿಮ್ಮ ಹೆಸರು' %>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <%= f.label :contributor_email, 'ಇಮೇಲ್ (Email)', style: 'font-weight: bold;' %>
+            <%= f.email_field :contributor_email, class: 'form-control', placeholder: 'email@example.com' %>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :current_place, 'ಪ್ರಸ್ತುತ ಸ್ಥಳ (Current Place)', style: 'font-weight: bold;' %>
+        <%= f.text_field :current_place, class: 'form-control', placeholder: 'ನೀವು ಈಗ ಎಲ್ಲಿ ವಾಸಿಸುತ್ತೀರಿ? (ಊರು/ಜಿಲ್ಲೆ/ರಾಜ್ಯ)' %>
+        <small style="color: #888;">ಇದು ಉಪಭಾಷೆಯ ಪ್ರದೇಶಕ್ಕಿಂತ ಭಿನ್ನವಾಗಿದ್ದರೆ, ಎರಡನ್ನೂ ನಮೂದಿಸಿ</small>
+      </div>
+    </div>
+
+    <%= hidden_field_tag :search_word, params[:search_word] %>
+
+    <div style="text-align: center;">
+      <%= f.submit 'ಸಮುದಾಯ ನಿಘಂಟಿಗೆ ಸೇರಿಸಿ', class: 'btn btn-warning btn-lg', style: 'font-size: 18px; padding: 12px 40px;' %>
+    </div>
+  <% end %>
+</div>
+
+<script>
+// Voice input for contribute form
+(function() {
+  var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  var activeRec = null, activeBtn = null;
+
+  function addMsg(form, text, color) {
+    var m = document.createElement('p');
+    m.style.cssText = 'color:' + color + ';font-size:13px;margin-bottom:15px;padding:8px 12px;background:#fff3f3;border-radius:4px;';
+    m.textContent = text;
+    form.prepend(m);
+  }
+
+  function init() {
+    var form = document.querySelector('.contribute-form');
+    if (!form) return;
+    if (!SR) { addMsg(form, 'ಧ್ವನಿ ನಮೂದು iPhone/Safari ನಲ್ಲಿ ಲಭ್ಯವಿಲ್ಲ. ದಯವಿಟ್ಟು ಕಂಪ್ಯೂಟರ್‌ನ Chrome ಬಳಸಿ.', '#e53935'); return; }
+    [].slice.call(form.querySelectorAll('.form-group')).forEach(function(g) {
+      var f = g.querySelector('input[type="text"], textarea');
+      if (!f || g.querySelector('[data-mic]')) return;
+      var b = document.createElement('button');
+      b.type = 'button'; b.setAttribute('data-mic', 'true');
+      b.title = 'ಧ್ವನಿ ನಮೂದು';
+      b.innerHTML = '<span style="font-size:18px;line-height:1;">🎤</span>';
+      b.style.cssText = 'position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;padding:4px 8px;z-index:5;opacity:0.5;';
+      b.onmouseenter = function(){ this.style.opacity = '1'; };
+      b.onmouseleave = function(){ this.style.opacity = '0.5'; };
+      g.style.position = 'relative';
+      var s = document.createElement('span');
+      s.style.cssText = 'font-size:11px;color:#999;margin-left:5px;display:none;';
+      g.appendChild(b); g.appendChild(s);
+      b.onclick = function(e) {
+        e.preventDefault();
+        if (activeRec) { stop(); return; }
+        start(f, b, s);
+      };
+    });
+  }
+
+  function start(field, btn, status) {
+    var r = new SR();
+    r.lang = 'kn-IN'; r.continuous = false; r.interimResults = true; r.maxAlternatives = 1;
+    activeRec = r; activeBtn = btn;
+    btn.innerHTML = '<span style="font-size:18px;line-height:1;">⏺</span>';
+    btn.style.opacity = '1';
+    status.style.display = 'inline'; status.textContent = 'ಆಲಿಸುತ್ತಿದೆ...'; status.style.color = '#e53935';
+    r.onresult = function(e) {
+      var t = '';
+      for (var i = e.resultIndex; i < e.results.length; i++) t += e.results[i][0].transcript;
+      field.value = t;
+      field.dispatchEvent(new Event('input', {bubbles:true}));
+      status.textContent = '✅'; status.style.color = '#4caf50';
+      setTimeout(function(){ status.style.display = 'none'; }, 2000);
+    };
+    r.onerror = function(e) {
+      var msg = e.error;
+      if (e.error === 'not-allowed') msg = 'ಮೈಕ್ ಅನುಮತಿ ನಿರಾಕರಿಸಲಾಗಿದೆ';
+      else if (e.error === 'service-not-allowed') msg = 'ಧ್ವನಿ ನಮೂದು ಲಭ್ಯವಿಲ್ಲ. HTTPS ಸಂಪರ್ಕ ಮತ್ತು ಮೈಕ್ ಅನುಮತಿ ಅಗತ್ಯ.';
+      else if (e.error === 'no-speech') msg = 'ಮಾತು ಪತ್ತೆಯಾಗಲಿಲ್ಲ, ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ';
+      else if (e.error === 'aborted') msg = 'ರದ್ದುಮಾಡಲಾಗಿದೆ';
+      else if (e.error === 'audio-capture') msg = 'ಮೈಕ್ ಸಾಧನ ಪತ್ತೆಯಾಗಲಿಲ್ಲ';
+      else msg = 'ದೋಷ: ' + e.error;
+      status.textContent = msg;
+      setTimeout(function(){ status.style.display = 'none'; }, 4000);
+      reset(btn); activeRec = null;
+    };
+    r.onend = function() { if (activeRec === r) { reset(btn); activeRec = null; } };
+    try { r.start(); } catch(e) { status.textContent = 'ಪ್ರಾರಂಭಿಸಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ'; setTimeout(function(){ status.style.display = 'none'; }, 3000); reset(btn); activeRec = null; }
+  }
+
+  function stop() { if (activeRec) { try { activeRec.stop(); } catch(e){} activeRec = null; } if (activeBtn) { reset(activeBtn); activeBtn = null; } }
+  function reset(b) { b.innerHTML = '<span style="font-size:18px;line-height:1;">🎤</span>'; b.style.opacity = '0.5'; var s = b.nextElementSibling; if (s && s.tagName === 'SPAN') setTimeout(function(){ s.style.display = 'none'; }, 2000); }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
+})();
+</script>
+
+<style>
+  .contribute-form .form-group { margin-bottom: 15px; }
+  .contribute-form label { margin-bottom: 5px; }
+  .contribute-form select.form-control { font-size: 14px; }
+  @media (max-width: 768px) {
+    .contribute-page { padding: 10px; }
+  }
+</style>

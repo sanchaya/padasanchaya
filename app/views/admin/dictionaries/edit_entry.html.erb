@@ -1,0 +1,40 @@
+<h2>ನಿಘಂಟು ನಮೂದು ಸಂಪಾದಿಸಿ #<%= @pada.id %></h2>
+
+<%= form_with model: @pada, url: update_entry_admin_dictionary_path(dictionary_id: @pada.dictionary_id, id: @pada.id), method: :patch, local: true, html: { style: 'max-width: 800px;' } do |f| %>
+  <div style="background: #f9f9f9; padding: 20px; border-radius: 8px; margin-bottom: 15px;">
+    <h5>ಮೂಲ ಮಾಹಿತಿ</h5>
+    <div class="row">
+      <div class="col-md-4"><%= f.label :word, 'ಪದ' %><%= f.text_field :word, class: 'form-control input-sm' %></div>
+      <div class="col-md-4"><%= f.label :pos, 'ಪದವರ್ಗ' %><%= f.text_field :pos, class: 'form-control input-sm' %></div>
+      <div class="col-md-4"><%= f.label :kannada_pronunciation, 'ಉಚ್ಚಾರಣೆ' %><%= f.text_field :kannada_pronunciation, class: 'form-control input-sm' %></div>
+    </div>
+    <div class="form-group" style="margin-top: 10px;">
+      <%= f.label :meaning, 'ಅರ್ಥ' %>
+      <%= f.text_area :meaning, class: 'form-control', rows: 3 %>
+    </div>
+  </div>
+
+  <div style="background: #f0f8ff; padding: 20px; border-radius: 8px; margin-bottom: 15px;">
+    <h5>ಶಬ್ದಕೋಶ ಮತ್ತು ವ್ಯುತ್ಪತ್ತಿ</h5>
+    <div class="form-group"><%= f.label :synonyms, 'ಪರ್ಯಾಯ ಪದಗಳು' %><%= f.text_area :synonyms, class: 'form-control', rows: 2 %></div>
+    <div class="row">
+      <div class="col-md-4"><%= f.label :root_language, 'ಮೂಲ ಭಾಷೆ' %><%= f.select :root_language, options_for_select(Pada::ROOT_LANGUAGES, @pada.root_language), { prompt: 'ಆಯ್ಕೆ' }, class: 'form-control input-sm' %></div>
+      <div class="col-md-4"><%= f.label :root_word, 'ಮೂಲ ಪದ' %><%= f.text_field :root_word, class: 'form-control input-sm' %></div>
+      <div class="col-md-4"><%= f.label :cognates, 'ಸಹಜ ಪದಗಳು' %><%= f.text_field :cognates, class: 'form-control input-sm' %></div>
+    </div>
+    <div class="form-group"><%= f.label :etymology, 'ವ್ಯುತ್ಪತ್ತಿ' %><%= f.text_area :etymology, class: 'form-control', rows: 2 %></div>
+  </div>
+
+  <div style="background: #fff8e1; padding: 20px; border-radius: 8px; margin-bottom: 15px;">
+    <h5>ವಿವರಣೆಗಳು</h5>
+    <div class="form-group"><%= f.label :short_description, 'ಸಂಕ್ಷಿಪ್ತ ವಿವರಣೆ' %><%= f.text_area :short_description, class: 'form-control', rows: 2 %></div>
+    <div class="form-group"><%= f.label :long_description, 'ವಿವರವಾದ ವಿವರಣೆ' %><%= f.text_area :long_description, class: 'form-control', rows: 3 %></div>
+    <div class="form-group"><%= f.label :administrative_word, 'ಆಡಳಿತ ಪದ' %><%= f.text_field :administrative_word, class: 'form-control input-sm' %></div>
+    <div class="form-group"><%= f.label :department, 'ವಿಭಾಗ' %><%= f.text_field :department, class: 'form-control input-sm' %></div>
+  </div>
+
+  <div style="text-align: center; margin: 20px 0;">
+    <%= f.submit 'ಉಳಿಸು', class: 'btn btn-warning btn-lg' %>
+    <%= link_to 'ಹಿಂದೆ', admin_dictionary_path(@pada.dictionary_id), class: 'btn btn-default btn-lg' %>
+  </div>
+<% end %>

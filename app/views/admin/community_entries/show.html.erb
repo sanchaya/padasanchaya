@@ -1,0 +1,30 @@
+<h2>ನಮೂದು #<%= @entry.id %></h2>
+
+<div style="background: #f9f9f9; padding: 20px; border-radius: 8px; margin: 15px 0;">
+  <table class="table" style="font-size: 14px;">
+    <tr><th style="width: 150px;">ಪದ</th><td><strong style="font-size: 18px;"><%= @entry.word %></strong></td></tr>
+    <tr><th>ಲಿಪ್ಯಂತರಣ</th><td><%= @entry.transliteration.presence || '-' %></td></tr>
+    <tr><th>ಅರ್ಥ</th><td><%= @entry.meaning %></td></tr>
+    <tr><th>ಇಂಗ್ಲೀಷ್ ಅರ್ಥ</th><td><%= @entry.meaning_in_english.presence || '-' %></td></tr>
+    <tr><th>ಪದವರ್ಗ</th><td><%= @entry.pos.presence || '-' %></td></tr>
+    <tr><th>ಸ್ಥಿತಿ</th><td><%= @entry.status || 'pending' %></td></tr>
+    <tr><th>ಪರ್ಯಾಯ ಪದಗಳು</th><td><%= @entry.synonyms.presence || '-' %></td></tr>
+    <tr><th>ವಿರುದ್ಧಾರ್ಥಕ</th><td><%= @entry.antonyms.presence || '-' %></td></tr>
+    <tr><th>ಬಳಕೆಯ ಉದಾಹರಣೆ</th><td><%= @entry.usage_example.presence || '-' %></td></tr>
+    <tr><th>ಮೂಲ ಭಾಷೆ</th><td><%= @entry.root_language.presence || '-' %></td></tr>
+    <tr><th>ಮೂಲ ಪದ</th><td><%= @entry.root_word.presence || '-' %></td></tr>
+    <tr><th>ಸಹಜ ಪದಗಳು</th><td><%= @entry.cognates.presence || '-' %></td></tr>
+    <tr><th>ವ್ಯುತ್ಪತ್ತಿ</th><td><%= @entry.etymology.presence || '-' %></td></tr>
+    <tr><th>ಉಪಭಾಷೆ</th><td><%= @entry.dialect&.kannada_name || @entry.dialect_name.presence || '-' %> <%= @entry.dialect_place.presence ? "(#{@entry.dialect_place})" : '' %></td></tr>
+    <tr><th>ಪರಿಸರ ಕ್ಷೇತ್ರ</th><td><%= @entry.ecological_domain.presence || '-' %></td></tr>
+    <tr><th>ಸಾಂಸ್ಕೃತಿಕ ಟಿಪ್ಪಣಿಗಳು</th><td><%= @entry.cultural_notes.presence || '-' %></td></tr>
+    <tr><th>ಕೊಡುಗೆದಾರ</th><td><%= @entry.contributor_name.presence || 'ಅಜ್ಞಾತ' %> <%= @entry.contributor_email.presence ? "(#{@entry.contributor_email})" : '' %></td></tr>
+    <tr><th>ಪ್ರಸ್ತುತ ಸ್ಥಳ</th><td><%= @entry.current_place.presence || '-' %></td></tr>
+    <tr><th>IP</th><td><%= @entry.user_ip.presence || '-' %></td></tr>
+    <tr><th>ವೋಟ್ಗಳು</th><td>👍 <%= @entry.votes_up %> / 👎 <%= @entry.votes_down %></td></tr>
+    <tr><th>ರಚನೆ</th><td><%= @entry.created_at %></td></tr>
+    <tr><th>ನವೀಕರಣ</th><td><%= @entry.updated_at %></td></tr>
+  </table>
+  <%= link_to 'ಸಂಪಾದಿಸು', edit_admin_community_entry_path(@entry), class: 'btn btn-warning' %>
+  <%= link_to 'ಹಿಂದೆ', admin_community_entries_path, class: 'btn btn-default' %>
+</div>

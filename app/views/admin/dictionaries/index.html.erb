@@ -1,0 +1,35 @@
+<h2>ನಿಘಂಟುಗಳು</h2>
+
+<table class="table table-striped" style="font-size: 13px;">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>ಹೆಸರು</th>
+      <th>ಮೂಲ ಹೆಸರು</th>
+      <th>ಪ್ರಕಾರ</th>
+      <th>ವರ್ಗ</th>
+      <th>ಪ್ರಕಾಶಕರು</th>
+      <th>ವರ್ಷ</th>
+      <th>ನಮೂದುಗಳು</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @dictionaries.each do |dict| %>
+      <tr>
+        <td><%= dict.id %></td>
+        <td><strong><%= dict.name %></strong></td>
+        <td><%= dict.core_name.presence || dict.original_name.presence || '-' %></td>
+        <td><%= dict.dictionary_type.presence || '-' %></td>
+        <td><%= dict.category.presence || '-' %></td>
+        <td><%= dict.publisher.presence || '-' %></td>
+        <td><%= dict.published_year %></td>
+        <td><%= Pada.where(dictionary_id: dict.id).count %></td>
+        <td>
+          <%= link_to 'ನೋಡಿ', admin_dictionary_path(dict), class: 'btn btn-xs btn-primary' %>
+          <%= link_to 'ಸಂಪಾದಿಸು', edit_admin_dictionary_path(dict), class: 'btn btn-xs btn-warning' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

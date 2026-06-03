@@ -1,0 +1,21 @@
+<h2>ಸೆಟ್ಟಿಂಗ್‌ಗಳು</h2>
+
+<%= form_tag admin_settings_path, method: :post, style: 'max-width: 500px;' do %>
+  <div style="background: #f9f9f9; padding: 20px; border-radius: 8px; margin: 20px 0;">
+    <h5>ಹುಡುಕಾಟ ಸೆಟ್ಟಿಂಗ್‌ಗಳು</h5>
+    <div style="margin: 15px 0;">
+      <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+        <%= check_box_tag :show_dictionary_names, '1', @show_dictionary_names == 'true', style: 'width: 20px; height: 20px;' %>
+        <span style="font-size: 15px;">ಹುಡುಕಾಟ ಫಲಿತಾಂಶಗಳಲ್ಲಿ ನಿಘಂಟಿನ ಹೆಸರನ್ನು ತೋರಿಸು</span>
+      </label>
+      <p style="font-size: 12px; color: #888; margin: 5px 0 0 28px;">
+        ಆನ್ ಮಾಡಿದರೆ, ಪ್ರತಿ ಪದದ ಫಲಿತಾಂಶದ ಕೆಳಗೆ ಆ ನಿಘಂಟಿನ ಹೆಸರು, ಪ್ರಕಾಶಕರು ಮತ್ತು ವರ್ಷ ತೋರಿಸುತ್ತದೆ.
+      </p>
+    </div>
+  </div>
+
+  <div style="text-align: center;">
+    <%= submit_tag 'ಉಳಿಸು', class: 'btn btn-warning btn-lg' %>
+    <%= link_to 'ಹಿಂದೆ', admin_dashboard_path, class: 'btn btn-default btn-lg' %>
+  </div>
+<% end %>

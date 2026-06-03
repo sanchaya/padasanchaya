@@ -1,0 +1,15 @@
+<h2>ಆಡ್ಮಿನ್ ಲಾಗಿನ್</h2>
+
+<div style="max-width: 400px; margin: 40px auto; padding: 30px; background: #f9f9f9; border-radius: 8px; border-left: 4px solid #333;">
+  <%= form_tag admin_login_path, method: :post do %>
+    <div class="form-group">
+      <label style="font-weight: bold;">ಇಮೇಲ್ (Email)</label>
+      <%= email_field_tag :email, '', class: 'form-control', required: true, placeholder: 'admin@example.com', style: 'font-size: 16px;' %>
+    </div>
+    <div class="form-group">
+      <label style="font-weight: bold;">ಪಾಸ್ವರ್ಡ್ (Password)</label>
+      <%= password_field_tag :password, '', class: 'form-control', required: true, style: 'font-size: 16px;' %>
+    </div>
+    <%= submit_tag 'ಲಾಗಿನ್', class: 'btn btn-primary btn-block', style: 'font-size: 16px;' %>
+  <% end %>
+</div>

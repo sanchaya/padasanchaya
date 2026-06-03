@@ -41,6 +41,27 @@ kn:
   kannada: 'ಕನ್ನಡ'
   english: 'ಇಂಗ್ಲೀಷ್'
 
+  # Community
+  community_dictionary: 'ಸಮುದಾಯ ನಿಘಂಟು'
+  contribute: 'ಸೇರಿಸಿ'
+  contributor_name: 'ಹೆಸರು'
+  contributor_email: 'ಇಮೇಲ್'
+  current_place: 'ಪ್ರಸ್ತುತ ಸ್ಥಳ'
+  dialect_place: 'ಉಪಭಾಷೆಯ ಪ್ರದೇಶ'
+  dialect_name: 'ಉಪಭಾಷೆಯ ಹೆಸರು'
+  is_dialect: 'ಇದು ಉಪಭಾಷೆಯ ಪದವಾಗಿದೆ'
+  transliteration: 'ಲಿಪ್ಯಂತರಣ'
+  meaning_in_english: 'ಇಂಗ್ಲೀಷ್ ಅರ್ಥ'
+  synonyms: 'ಪರ್ಯಾಯ ಪದಗಳು'
+  antonyms: 'ವಿರುದ್ಧಾರ್ಥಕ ಪದಗಳು'
+  usage_example: 'ಬಳಕೆಯ ಉದಾಹರಣೆ'
+  etymology: 'ವ್ಯುತ್ಪತ್ತಿ ಟಿಪ್ಪಣಿಗಳು'
+  root_language: 'ಮೂಲ ಭಾಷೆ'
+  root_word: 'ಮೂಲ ಪದ'
+  cognates: 'ಸಹಜ ಪದಗಳು'
+  ecological_domain: 'ಪರಿಸರ ಕ್ಷೇತ್ರ'
+  cultural_notes: 'ಸಾಂಸ್ಕೃತಿಕ ಟಿಪ್ಪಣಿಗಳು'
+
   # Heading text
   search_heading: 'ಕನ್ನಡ ನಿಘಂಟುಗಳ ಸಂಚಯ'
-  search_sub_heading: 'ಕನ್ನಡದ ಪದಗಳ ಅರ್ಥ, ಬಳಕೆ, ಇತ್ಯಾದಿಗಳ ಹುಡುಕಿಗೆ ಮೊದಲಾಗಿ'
+  search_sub_heading: 'ಕನ್ನಡದ ಪದಗಳ ಅರ್ಥ, ಬಳಕೆ, ಇತ್ಯಾದಿಗಳ ಹುಡುಕಲು ಮೊದಲಾಗಿ'

@@ -1,9 +1,7 @@
 <div class="main-search">
-  <div class="intoduction-text">
-    <p align="center">
-      <h2> <%= t(:search_heading)%> </h2>
-      <h4><%= t(:search_sub_heading)%>  </h4>
-    </p>
+  <div class="intoduction-text" style="text-align: center;">
+    <h1> <%= t(:search_heading)%> </h1>
+    <p style="font-size: 18px;"><%= t(:search_sub_heading)%>  </p>
   </div>
   <hr />
   <div class="form-group main-search-field">
@@ -16,9 +14,8 @@
 
 <div class="meaning-section">
   <div class="row">
-    <div class="col-md-3">
-    </div>
-    <div class="col-md-5">
+    <div class="col-md-2 hidden-xs hidden-sm"></div>
+    <div class="col-md-7">
       <% if @meanings %>
         <%= render "pada_meaning" %>
       <% elsif @random_pada %>
@@ -30,7 +27,7 @@
         </div>
       <% end %>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
         <% if @similar_meanings && @similar_meanings.count > 0 %>
         <%= render "similar_meaning" %>
         <% end %>

@@ -1,0 +1,55 @@
+<h2>ನಿಘಂಟು ಸಂಪಾದಿಸಿ #<%= @dictionary.id %> - <%= @dictionary.name %></h2>
+
+<%= form_with model: @dictionary, url: admin_dictionary_path(@dictionary), method: :patch, local: true, html: { style: 'max-width: 800px;' } do |f| %>
+  <div style="background: #f9f9f9; padding: 20px; border-radius: 8px; margin-bottom: 15px;">
+    <h5>ಮೂಲ ಮಾಹಿತಿ</h5>
+    <div class="row">
+      <div class="col-md-6"><%= f.label :name, 'ಹೆಸರು' %><%= f.text_field :name, class: 'form-control input-sm' %></div>
+      <div class="col-md-6"><%= f.label :core_name, 'ಮೂಲ ಹೆಸರು' %><%= f.text_field :core_name, class: 'form-control input-sm' %></div>
+    </div>
+    <div class="form-group" style="margin-top: 10px;">
+      <%= f.label :description, 'ವಿವರಣೆ' %>
+      <%= f.text_area :description, class: 'form-control', rows: 3 %>
+    </div>
+  </div>
+
+  <div style="background: #f0f8ff; padding: 20px; border-radius: 8px; margin-bottom: 15px;">
+    <h5>ವರ್ಗೀಕರಣ</h5>
+    <div class="row">
+      <div class="col-md-4"><%= f.label :dictionary_type, 'ನಿಘಂಟಿನ ಪ್ರಕಾರ' %><%= f.text_field :dictionary_type, class: 'form-control input-sm', placeholder: 'ಉದಾ: ಸಾಮಾನ್ಯ, ಪಾರಿಭಾಷಿಕ, ವಿಜ್ಞಾನ...' %></div>
+      <div class="col-md-4"><%= f.label :category, 'ವರ್ಗ' %><%= f.text_field :category, class: 'form-control input-sm', placeholder: 'ಉದಾ: ಭಾಷಾ, ವಿಜ್ಞಾನ, ಕೃಷಿ...' %></div>
+      <div class="col-md-4" style="padding-top: 22px;">
+        <%= f.label :multilingual do %>
+          <%= f.check_box :multilingual %> ಬಹುಭಾಷಾ ನಿಘಂಟು
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div style="background: #fff8e1; padding: 20px; border-radius: 8px; margin-bottom: 15px;">
+    <h5>ಪ್ರಕಾಶನ ಮಾಹಿತಿ</h5>
+    <div class="row">
+      <div class="col-md-4"><%= f.label :publisher, 'ಪ್ರಕಾಶಕರು' %><%= f.text_field :publisher, class: 'form-control input-sm' %></div>
+      <div class="col-md-4"><%= f.label :published_year, 'ಪ್ರಕಾಶನ ವರ್ಷ' %><%= f.number_field :published_year, class: 'form-control input-sm' %></div>
+      <div class="col-md-4"><%= f.label :total_entries, 'ಒಟ್ಟು ನಮೂದುಗಳು' %><%= f.number_field :total_entries, class: 'form-control input-sm' %></div>
+    </div>
+  </div>
+
+  <div style="background: #e8f5e9; padding: 20px; border-radius: 8px; margin-bottom: 15px;">
+    <h5>ಹುಡುಕಾಟ ಸೆಟ್ಟಿಂಗ್‌</h5>
+    <div style="margin: 10px 0;">
+      <%= f.label :show_name_in_search do %>
+        <%= f.check_box :show_name_in_search %>
+        <span style="font-size: 15px;">ಹುಡುಕಾಟ ಫಲಿತಾಂಶಗಳಲ್ಲಿ ಈ ನಿಘಂಟಿನ ಹೆಸರನ್ನು ತೋರಿಸು</span>
+      <% end %>
+      <p style="font-size: 12px; color: #666; margin: 3px 0 0 24px;">
+        ಜಾಗತಿಕ ಸೆಟ್ಟಿಂಗ್ ಆನ್ ಆಗಿದ್ದಾಗ ಮಾತ್ರ ಇದು ಪರಿಣಾಮಕಾರಿ.
+      </p>
+    </div>
+  </div>
+
+  <div style="text-align: center; margin: 20px 0;">
+    <%= f.submit 'ಉಳಿಸು', class: 'btn btn-warning btn-lg' %>
+    <%= link_to 'ಹಿಂದೆ', admin_dictionaries_path, class: 'btn btn-default btn-lg' %>
+  </div>
+<% end %>

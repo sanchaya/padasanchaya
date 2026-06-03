@@ -1,14 +1,70 @@
 <!DOCTYPE html>
-<html>
+<html lang="kn" itemscope itemtype="https://schema.org/CollectionPage">
   <head>
-    <title><%= t(:pada_kanaja) %></title>
+    <title><%= @page_title || t(:pada_kanaja) %></title>
+    <meta name="description" content="<%= @page_description %>">
+    <meta name="keywords" content="<%= @page_keywords %>">
+    <link rel="canonical" href="<%= @canonical_url %>">
+
+    <meta property="og:title" content="<%= @page_title %>">
+    <meta property="og:description" content="<%= @page_description %>">
+    <meta property="og:type" content="<%= @og_type || 'website' %>">
+    <meta property="og:url" content="<%= @canonical_url %>">
+    <meta property="og:image" content="<%= @page_image %>">
+    <meta property="og:site_name" content="ಪದ ಸಂಚಯ (Pada Sanchaya)">
+    <meta property="og:locale" content="kn_IN">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="<%= @page_title %>">
+    <meta name="twitter:description" content="<%= @page_description %>">
+    <meta name="twitter:image" content="<%= @page_image %>">
+    <meta property="og:image:width" content="120">
+    <meta property="og:image:height" content="120">
+    <link rel="alternate" href="<%= @canonical_url %>" hreflang="kn">
+
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-site-verification" content="ZotsO25cZq_rXfpAvjaKCE9XQjL5zPnUFEJDlJu2rg8">
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "ಪದ ಸಂಚಯ",
+      "alternateName": "Pada Sanchaya",
+      "url": "https://pada.sanchaya.net",
+      "description": "<%= @page_description %>",
+      "inLanguage": "kn",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://pada.sanchaya.net/?search={search_term_string}"
+        },
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "ಪದ ಸಂಚಯ",
+          "item": "https://pada.sanchaya.net"
+        }<%= @breadcrumb_json ? ',' + @breadcrumb_json : '' %>
+      ]
+    }
+    </script>
   </head>
 
   <body>
@@ -20,13 +76,15 @@
             <span class="icon-bar"></span>
           </button>
           <a href="<%= root_path %>" class="navbar-brand">
-            <img src="https://vachana.sanchaya.net/app-icon-light.png" alt="<%= t(:pada_kanaja) %>" class="header-logo-img">
+            <img src="https://vachana.sanchaya.net/app-icon-light.png" alt="ಪದ ಸಂಚಯ - ಕನ್ನಡ ನಿಘಂಟುಗಳ ಸಂಚಯ" class="header-logo-img" width="24" height="24">
             <%= t(:pada_kanaja) %>
           </a>
           <div class="navbar-collapse collapse navbar-responsive-collapse">
             <ul class="nav navbar-nav">
+              <li> <%= link_to 'ಸಮುದಾಯ ನಿಘಂಟು', community_path %> </li>
+              <li> <%= link_to 'ಸೇರಿಸಿ', contribute_path %> </li>
               <li> <%= link_to t(:about_us), about_path %> </li>
-              <li> <%= link_to t(:help), '#' %> </li>
+              <li> <%= link_to t(:help), help_path %> </li>
               <li> <%= link_to t(:contact), '#' %> </li>
             </ul>
           </div>
@@ -35,8 +93,6 @@
 
       <!-- /header -->
       <div class="container pada-kanaja-content" style="min-height: 500px;">
-       <center><form><script src="https://cdn.razorpay.com/static/widget/payment-button.js" data-payment_button_id="pl_FTB1pZqrFP6jrt"> </script> </form>
-        </center> 
 	<div class="row">
           <%= bootstrap_flash %>
           <%= yield %>
@@ -47,12 +103,14 @@
         <footer class="footer">
           <div class="container">
               <div class="copy-right">
-                This portal is a collection of various Kannada dictionaries, created to provide comprehensive access to Kannada lexical resources as a not-for-profit initiative.
+                <div class="hidden-xs hidden-sm">
+                  This portal is a collection of various Kannada dictionaries, created to provide comprehensive access to Kannada lexical resources as a not-for-profit initiative.
 
 The Kannada community is invited to contribute to this project and help make it a comprehensive digital dictionary for all. Wherever available, licensing information for the dictionaries will be displayed.
 
 We are actively seeking permission to include additional dictionaries in this portal. The community is hereby requested to help us connect with the respective owners and rights holders of dictionaries that could be added to this collection.
-                <p style="font-size: 11px; margin-top: 0.5em; margin-bottom: 0;">Since 2010 - Sanchaya &amp; Sanchi Foundation</p>
+                </div>
+                <p style="font-size: 11px; margin-top: 0.5em; margin-bottom: 0;">Since 2010 - Sanchaya &amp; Sanchi Foundation &nbsp;|&nbsp; <a href="/admin/login" style="color: #999; text-decoration: underline;">Admin</a></p>
               </div>
           </div>
         </footer>

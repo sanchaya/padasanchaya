@@ -25,7 +25,7 @@ gem 'jbuilder', '~> 2.5'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
+gem 'bcrypt', '~> 3.1.7'
 gem 'rubyzip'
 
 # Use ActiveStorage variant
@@ -72,3 +72,5 @@ gem 'unidecode'
 gem 'mimemagic', '~> 0.4.3'
 
 
+
+gem "kaminari", "~> 1.2"

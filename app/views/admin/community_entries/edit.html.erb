@@ -1,0 +1,68 @@
+<h2>ಸಮುದಾಯ ನಮೂದು ಸಂಪಾದಿಸಿ #<%= @entry.id %></h2>
+
+<%= form_with model: @entry, url: admin_community_entry_path(@entry), method: :patch, local: true, html: { style: 'max-width: 800px;' } do |f| %>
+
+  <div style="background: #f9f9f9; padding: 20px; border-radius: 8px; margin-bottom: 15px;">
+    <h5>ಮೂಲ ಮಾಹಿತಿ</h5>
+    <div class="row">
+      <div class="col-md-4"><%= f.label :word, 'ಪದ' %><%= f.text_field :word, class: 'form-control input-sm' %></div>
+      <div class="col-md-4"><%= f.label :transliteration, 'ಲಿಪ್ಯಂತರಣ' %><%= f.text_field :transliteration, class: 'form-control input-sm' %></div>
+      <div class="col-md-4"><%= f.label :pos, 'ಪದವರ್ಗ' %><%= f.select :pos, options_for_select(JanaSanchayaEntry::POS_TYPES, @entry.pos), { prompt: 'ಆಯ್ಕೆ' }, class: 'form-control input-sm' %></div>
+    </div>
+    <div class="form-group" style="margin-top: 10px;">
+      <%= f.label :meaning, 'ಅರ್ಥ' %>
+      <%= f.text_area :meaning, class: 'form-control', rows: 2 %>
+    </div>
+    <div class="form-group">
+      <%= f.label :meaning_in_english, 'ಇಂಗ್ಲೀಷ್ ಅರ್ಥ' %>
+      <%= f.text_area :meaning_in_english, class: 'form-control', rows: 2 %>
+    </div>
+  </div>
+
+  <div style="background: #f0f8ff; padding: 20px; border-radius: 8px; margin-bottom: 15px;">
+    <h5>ಶಬ್ದಕೋಶ</h5>
+    <div class="form-group"><%= f.label :synonyms, 'ಪರ್ಯಾಯ ಪದಗಳು' %><%= f.text_area :synonyms, class: 'form-control', rows: 2 %></div>
+    <div class="form-group"><%= f.label :antonyms, 'ವಿರುದ್ಧಾರ್ಥಕ' %><%= f.text_area :antonyms, class: 'form-control', rows: 2 %></div>
+    <div class="form-group"><%= f.label :usage_example, 'ಬಳಕೆಯ ಉದಾಹರಣೆ' %><%= f.text_area :usage_example, class: 'form-control', rows: 2 %></div>
+  </div>
+
+  <div style="background: #fce4ec; padding: 20px; border-radius: 8px; margin-bottom: 15px;">
+    <h5>ವ್ಯುತ್ಪತ್ತಿ</h5>
+    <div class="row">
+      <div class="col-md-6"><%= f.label :root_language, 'ಮೂಲ ಭಾಷೆ' %><%= f.select :root_language, options_for_select(JanaSanchayaEntry::ROOT_LANGUAGES, @entry.root_language), { prompt: 'ಆಯ್ಕೆ' }, class: 'form-control input-sm' %></div>
+      <div class="col-md-6"><%= f.label :root_word, 'ಮೂಲ ಪದ' %><%= f.text_field :root_word, class: 'form-control input-sm' %></div>
+    </div>
+    <div class="form-group"><%= f.label :cognates, 'ಸಹಜ ಪದಗಳು' %><%= f.text_area :cognates, class: 'form-control', rows: 2 %></div>
+    <div class="form-group"><%= f.label :etymology, 'ವ್ಯುತ್ಪತ್ತಿ ಟಿಪ್ಪಣಿಗಳು' %><%= f.text_area :etymology, class: 'form-control', rows: 2 %></div>
+  </div>
+
+  <div style="background: #fff8e1; padding: 20px; border-radius: 8px; margin-bottom: 15px;">
+    <h5>ಉಪಭಾಷೆ ಮತ್ತು ಪರಿಸರ</h5>
+    <div class="row">
+      <div class="col-md-4">
+        <label><%= f.check_box :is_dialect %> ಉಪಭಾಷೆಯ ಪದ</label>
+      </div>
+      <div class="col-md-4"><%= f.label :dialect_name, 'ಉಪಭಾಷೆ' %><%= f.text_field :dialect_name, class: 'form-control input-sm' %></div>
+      <div class="col-md-4"><%= f.label :dialect_place, 'ಉಪಭಾಷೆಯ ಪ್ರದೇಶ' %><%= f.text_field :dialect_place, class: 'form-control input-sm' %></div>
+    </div>
+    <div class="row" style="margin-top: 10px;">
+      <div class="col-md-6"><%= f.label :ecological_domain, 'ಪರಿಸರ ಕ್ಷೇತ್ರ' %><%= f.select :ecological_domain, options_for_select(JanaSanchayaEntry::ECOLOGICAL_DOMAINS, @entry.ecological_domain), { prompt: 'ಆಯ್ಕೆ' }, class: 'form-control input-sm' %></div>
+      <div class="col-md-6"><%= f.label :status, 'ಸ್ಥಿತಿ' %><%= f.select :status, options_for_select([['pending','pending'],['approved','approved'],['rejected','rejected']], @entry.status), {}, class: 'form-control input-sm' %></div>
+    </div>
+    <div class="form-group"><%= f.label :cultural_notes, 'ಸಾಂಸ್ಕೃತಿಕ ಟಿಪ್ಪಣಿಗಳು' %><%= f.text_area :cultural_notes, class: 'form-control', rows: 2 %></div>
+  </div>
+
+  <div style="background: #f3e5f5; padding: 20px; border-radius: 8px; margin-bottom: 15px;">
+    <h5>ಕೊಡುಗೆದಾರ</h5>
+    <div class="row">
+      <div class="col-md-4"><%= f.label :contributor_name, 'ಹೆಸರು' %><%= f.text_field :contributor_name, class: 'form-control input-sm' %></div>
+      <div class="col-md-4"><%= f.label :contributor_email, 'ಇಮೇಲ್' %><%= f.email_field :contributor_email, class: 'form-control input-sm' %></div>
+      <div class="col-md-4"><%= f.label :current_place, 'ಪ್ರಸ್ತುತ ಸ್ಥಳ' %><%= f.text_field :current_place, class: 'form-control input-sm' %></div>
+    </div>
+  </div>
+
+  <div style="text-align: center; margin: 20px 0;">
+    <%= f.submit 'ಉಳಿಸು', class: 'btn btn-warning btn-lg' %>
+    <%= link_to 'ರದ್ದು', admin_community_entries_path, class: 'btn btn-default btn-lg' %>
+  </div>
+<% end %>
