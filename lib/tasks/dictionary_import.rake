@@ -2,7 +2,7 @@ require 'csv'
 require 'zip'
 
 namespace :dictionaries do
-  desc "Import all dictionary CSV files from padakanaja_dictionaries.zip into dictionary_entries + padas/dictionaries tables"
+  desc "Import all dictionary CSV files from ZIP archive into dictionary_entries + padas/dictionaries tables"
   task import: :environment do
     zip_path = Rails.root.join('padakanaja_dictionaries.zip')
     unless File.exist?(zip_path)

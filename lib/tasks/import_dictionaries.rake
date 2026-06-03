@@ -3,7 +3,7 @@ require 'csv'
 require 'active_record'
 
 namespace :import do
-  desc 'Reimport Padakanaja dictionaries from new zip file (fresh data)'
+  desc 'Reimport dictionaries from ZIP file (fresh data)'
   task dictionaries: :environment do
     puts 'Clearing all existing dictionaries and padas...'
     Pada.delete_all
@@ -39,7 +39,7 @@ namespace :import do
 
         dictionary = Dictionary.find_or_create_by(name: shortname) do |d|
           d.original_name = dict_name.to_s[0, 255]
-          d.description = "Imported from padakanaja zip (source file: #{entry.name})"
+          d.description = "Imported from dictionary zip (source file: #{entry.name})"
         end
 
         puts "Importing entries from dictionary #{dict_name} (#{shortname})"

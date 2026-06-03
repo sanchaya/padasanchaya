@@ -22,7 +22,7 @@ A comprehensive Kannada dictionary portal aggregating multiple dictionary source
 | Source | Entries | Description |
 |--------|---------|-------------|
 | Legacy Dictionaries | ~190,000 | Pre-existing dictionaries in `padas` table |
-| ZIP-imported Dictionaries | 103 dictionaries | Imported from `padakanaja_dictionaries.zip` |
+| ZIP-imported Dictionaries | 103 dictionaries | Imported from dictionary ZIP archive |
 | Kannada Wiktionary | ~130,000 | From kn.wiktionary.org XML dump |
 | Vachana Sanchaya Glossary | ~6,200 | Vachana literature glossary |
 | Community (Jana Sanchaya) | User-contributed | Crowdsourced entries with voting |

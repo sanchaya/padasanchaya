@@ -1,19 +1,19 @@
 # Dictionary Import Guide
 
-This document describes how dictionary data is imported and managed in Padakannaja.
+This document describes how dictionary data is imported and managed in Pada Sanchaya.
 
 ## Overview
 
 The application supports three types of dictionaries:
 1. **Old/Legacy Dictionaries** (IDs 1-10) - Pre-existing before ZIP import
-2. **ZIP Dictionaries** (IDs 11-121) - Imported from `padakanaja_dictionaries.zip`
+2. **ZIP Dictionaries** (IDs 11-121) - Imported from dictionary ZIP archive
 3. **Kannada Wiktionary** - Imported from kn.wiktionary.org (see WIKTIONARY_IMPORT.md)
 
 ## ZIP Dictionary Import
 
 ### Source File
 
-- **File**: `padakanaja_dictionaries.zip` (in Rails root)
+- **File**: Dictionary ZIP archive (in Rails root)
 - **Format**: ZIP archive containing CSV files
 - **Total dictionaries**: 92
 - **Total entries**: 593,113

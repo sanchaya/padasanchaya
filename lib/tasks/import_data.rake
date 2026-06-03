@@ -84,7 +84,7 @@ end
 
 
 # description of task
-desc 'Import csv to padakanaja table'
+desc 'Import CSV to dictionary table'
 # rake task name. Here "import_csv"
 task import_krp_pa_csv: :environment do
 
@@ -110,7 +110,7 @@ end
 
 
 # description of task
-desc 'Import csv to padakanaja table'
+desc 'Import CSV to dictionary table'
 # rake task name. Here "import_csv"
 task import_dasa_padakosha_csv: :environment do
 
