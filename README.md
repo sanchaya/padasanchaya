@@ -24,7 +24,7 @@ A comprehensive Kannada dictionary portal aggregating multiple dictionary source
 | Legacy Dictionaries | ~190,000 | Pre-existing dictionaries in `padas` table |
 | ZIP-imported Dictionaries | 103 dictionaries | Imported from dictionary ZIP archive |
 | Kannada Wiktionary | ~130,000 | From kn.wiktionary.org XML dump |
-| Indic-Dict Stardict | 16 dictionaries | From indic-dict/stardict-kannada (Babylon/TSV/CSV) |
+| Indic-Dict Stardict | 16 dictionaries | From [indic-dict/stardict-kannada](https://github.com/indic-dict/stardict-kannada) (Babylon/TSV/CSV) |
 | Alar (kn-en) | Included above | By V. Krishna, primary source: [alar-dict/data](https://github.com/alar-dict/data) (ODbL) |
 | Vachana Sanchaya Glossary | ~6,200 | Vachana literature glossary |
 | Community (Jana Sanchaya) | User-contributed | Crowdsourced entries with voting |
