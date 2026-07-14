@@ -60,6 +60,20 @@
             <% if meaning.cognates.present? %>
               <p style="font-size: 12px; color: #e91e63; margin: 3px 0;"><strong>ಸಹಜ ಪದಗಳು:</strong> <%= meaning.cognates %></p>
             <% end %>
+            <% if meaning.root_word.present? %>
+              <% related = meaning.respond_to?(:cognate_entries) ? meaning.cognate_entries.limit(5) : [] %>
+              <% if related.any? %>
+                <div style="margin: 5px 0; padding: 6px 8px; background: #fff8e1; border-radius: 4px; font-size: 12px;">
+                  <strong style="color: #f57f17;">ಸಂಬಂಧಿತ ಮೂಲ ಪದಗಳು:</strong>
+                  <% related.each do |r| %>
+                    <span style="display: inline-block; background: #fff3cd; padding: 1px 6px; border-radius: 3px; margin: 2px;">
+                      <%= r.word %>
+                      <% if r.root_language.present? %> <span style="color: #c62828;">(<%= r.root_language %>)</span><% end %>
+                    </span>
+                  <% end %>
+                </div>
+              <% end %>
+            <% end %>
           <% end %>
           
           <div class="dictionary-underline" style="border-bottom: 3px solid <%= dictionary_color(meaning.dictionary_id) %>"></div>

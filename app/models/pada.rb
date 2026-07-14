@@ -28,4 +28,21 @@ class Pada < ApplicationRecord
     where.not(id: ids)
   end
 
+  def self.by_root_word(root_word)
+    return none if root_word.blank?
+    where(root_word: root_word).where.not(root_language: nil)
+  end
+
+  def self.cognates_for(root_word, exclude_id: nil)
+    return none if root_word.blank?
+    relation = where(root_word: root_word).where.not(root_language: nil)
+    relation = relation.where.not(id: exclude_id) if exclude_id
+    relation
+  end
+
+  def cognate_entries
+    return Pada.none if root_word.blank?
+    self.class.cognates_for(root_word, exclude_id: id)
+  end
+
 end
