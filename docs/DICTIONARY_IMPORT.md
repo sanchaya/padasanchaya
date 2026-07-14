@@ -5,9 +5,9 @@ This document describes how dictionary data is imported and managed in Pada Sanc
 ## Overview
 
 The application supports three types of dictionaries:
-1. **Old/Legacy Dictionaries** (IDs 1-10) - Pre-existing before ZIP import
-2. **ZIP Dictionaries** (IDs 11-121) - Imported from dictionary ZIP archive
-3. **Kannada Wiktionary** - Imported from kn.wiktionary.org (see WIKTIONARY_IMPORT.md)
+1. **Old/Legacy Dictionaries** (IDs 1-10) — Pre-existing before ZIP import
+2. **ZIP Dictionaries** (IDs 11-121) — Imported from dictionary ZIP archive
+3. **Kannada Wiktionary** — Imported from kn.wiktionary.org (see WIKTIONARY_IMPORT.md)
 
 ## ZIP Dictionary Import
 
@@ -21,13 +21,13 @@ The application supports three types of dictionaries:
 ### CSV Format
 
 Each CSV file contains rows with these columns:
-- `dict_id` - Dictionary ID
-- `dict_name` - Dictionary name in Kannada
-- `dict_english_name` - English name
-- `kannada_word` - Word in Kannada
-- `english_word` - Word in English
-- `kannada_meaning`, `english_meaning` - Meanings
-- `synonyms`, `subject`, `grammar`, `department` - Additional metadata
+- `dict_id` — Dictionary ID
+- `dict_name` — Dictionary name in Kannada
+- `dict_english_name` — English name
+- `kannada_word` — Word in Kannada
+- `english_word` — Word in English
+- `kannada_meaning`, `english_meaning` — Meanings
+- `synonyms`, `subject`, `grammar`, `department` — Additional metadata
 
 ### Import Steps
 
@@ -58,7 +58,7 @@ This:
 
 ### Tables
 
-**dictionary_entries** - Raw imported data
+**dictionary_entries** — Raw imported data
 ```
 + id, dict_id, dict_name, dict_english_name
 + kannada_word, english_word, kannada_meaning, english_meaning
@@ -66,21 +66,27 @@ This:
 + timestamps
 ```
 
-**dictionary_file_stats** - Import tracking
+**dictionary_file_stats** — Import tracking
 ```
 + file_name, table_name, dict_id
 + dict_name, dict_english_name, total_entries
 + source_file_path, timestamps
 ```
 
-**padas** - Searchable normalized data
+**padas** — Searchable normalized data
 ```
 + word, meaning, pos, language_id, meaning_language_id, dictionary_id
++ synonyms, department, kannada_pronunciation
++ short_description, long_description, administrative_word
++ root_language, root_word, cognates
 ```
 
-**dictionaries** - Dictionary metadata
+**dictionaries** — Dictionary metadata
 ```
-+ name, description, timestamps
++ name, core_name, description
++ dictionary_type, category, multilingual
++ publisher, published_year, total_entries
++ show_name_in_search, timestamps
 ```
 
 ### Dictionary ID Ranges
@@ -89,7 +95,7 @@ This:
 |-------|------|-------|
 | 1-10 | Old/Legacy | 10 (pre-existing) |
 | 11-121 | ZIP Dictionaries | 92 (from ZIP file) |
-| 122+ | Wiktionary | Separate table |
+| 122+ | Stardict / Indic-Dict | Added dynamically |
 
 ## Indic-Dict Stardict-Kannada Import
 
@@ -100,7 +106,7 @@ contains Kannada dictionaries in Babylon (.babylon), TSV, and CSV formats.
 
 | Dictionary | Source | Type |
 |------------|--------|------|
-| Alar (kn-en) (ODbL) | `kn-head/en-entries/alar/alar.babylon` — primary source: [alar-dict/data](https://github.com/alar-dict/data) | Babylon |
+| Alar (kn-en) (ODbL) | `kn-head/en-entries/alar/alar.babylon` | Babylon |
 | Kittel (kn-en) | `kn-head/en-entries/kittel/kittel.babylon` | Babylon |
 | Mysore University (en-kn) | `en-head/mysore_uni_eng_kn/mysore_uni_eng_kn.babylon` | Babylon |
 | Keshiraja (kn-en) | `kn-head/en-entries/keshirAja/keshirAja.babylon` | Babylon |
@@ -110,7 +116,6 @@ contains Kannada dictionaries in Babylon (.babylon), TSV, and CSV formats.
 | Hale Gannada Pada Sampada (kn-kn) | `kn-head/kn-entries/haLe-gannaDa-pada-sampada/haLe-gannaDa-pada-sampada.babylon` | Babylon |
 | Janapada Vastu Kosha (kn-kn) | `kn-head/kn-entries/janapada-vastu-kosha/janapada-vastu-kosha.babylon` | Babylon |
 | Kumaravyasa (kn-kn) | `kn-head/kn-entries/kumAravyAsa/kumAravyAsa.babylon` | Babylon |
-| Maisuru Vishvakosha (kn-kn) | `kn-head/kn-entries/maisUru-vishvakosha/maisUru-vishvakosha.babylon` | Babylon |
 | Pampana Nudi Gani (kn-kn) | `kn-head/kn-entries/pampana-nuDi-gaNi/pampana-nuDi-gaNi.babylon` | Babylon |
 | Sanxipta Kannada Nighantu (kn-kn) | `kn-head/kn-entries/sanxipta-kannaDa-nighaNTu-ka-sa-pa/sanxipta-kannaDa-nighaNTu-ka-sa-pa.babylon` | Babylon |
 | Shrivatsa Nighantu (kn-kn) | `kn-head/kn-entries/shrIvatsa-nighaNTu/shrIvatsa-nighaNTu.babylon` | Babylon |
@@ -124,25 +129,70 @@ rails indic_dict:import RAILS_ENV=production
 ```
 
 This downloads each dictionary file from GitHub, parses it, and inserts entries into
-the `padas` table (deduplicating by word/meaning/dictionary_id).
+the `padas` table (deduplicating by word/meaning/dictionary_id). Already-imported
+dictionaries (those with existing `Pada` records) are automatically skipped.
+
+## Part of Speech (POS) and Grammar Tags
+
+The `padas` table stores POS (part of speech) information in the `pos` column.
+This data comes from several sources:
+
+- **ZIP dictionaries**: The `subject` and `grammar` CSV columns are mapped to `pos`
+- **JanaSanchaya community entries**: Users can select POS from a predefined list
+- **Wiktionary**: POS is extracted from Wiktionary page structure
+
+### Display
+
+POS tags are displayed in the public search results as labeled badges:
+- **Blue badges** for POS (noun, verb, adjective, etc.)
+- **Red badges** for root language origin (ಸಂಸ್ಕೃತ, ಇಂಗ್ಲೀಷ್, etc.)
+- **Purple badges** for pronunciation (/kannada/)
+
+On the admin dictionary detail page, POS and root language distributions are
+visualized with horizontal bar charts showing the top 10 values.
+
+## Admin Dictionary Management
+
+### Index Page (`/admin/dictionaries`)
+
+The admin dictionary list shows:
+- **Summary cards**: Total dictionaries, total entries, POS-tagged entries, root-language-tagged entries
+- **Table columns**: ID, name, core name, type, category, publisher, year, entry count, POS count, root language count, actions
+
+### Show Page (`/admin/dictionaries/:id`)
+
+Each dictionary detail page includes:
+- **Metadata panel**: All dictionary attributes (type, category, multilingual, publisher, year, etc.)
+- **Stats cards**: Total entries, entries with POS, entries with root language, entries with synonyms
+- **POS distribution chart**: Horizontal bar chart of top 10 POS tags
+- **Root language distribution chart**: Horizontal bar chart of top 10 root languages
+- **Searchable entries table**: Paginated list of entries with POS and root language badges
+
+### Edit Page (`/admin/dictionaries/:id/edit`)
+
+Edit form with sections:
+- Basic info (name, core name, description)
+- Classification (type, category, multilingual)
+- Publishing info (publisher, year, total entries)
+- Search settings (show_name_in_search)
 
 ## Stats Page
 
 The `/stats` page aggregates data from all sources:
 
-- **ZIP Dictionaries**: Count from `dictionary_file_stats`
-- **Old Dictionaries**: Count from `dictionaries` (IDs 1-10)
-- **Wiktionary**: Count from `wiktionary_entries`
-- **Overall Total**: `padas.count + dictionary_entries.count + wiktionary_entries.count`
+- **All Dictionaries**: Each dictionary with entry count
+- **Vachana Sanchaya**: Glossary entries from vachana.sanchaya.net
+- **Indic-Dict Stardict**: Per-dictionary counts
+- **Wiktionary**: Entries from kn.wiktionary.org
 
 ## Legacy Import Rake Tasks
 
 Several legacy rake tasks exist in `lib/tasks/`:
 
-- `dictionary_import.rake` - Main ZIP import to `dictionary_entries`
-- `import_into_padas.rake` - Maps ZIP data to `padas`
-- `integrate_dictionaries.rake` - Integration helper
-- `fix_all_names.rake` - Name fixing utility
+- `dictionary_import.rake` — Main ZIP import to `dictionary_entries`
+- `import_into_padas.rake` — Maps ZIP data to `padas`
+- `integrate_dictionaries.rake` — Integration helper
+- `fix_all_names.rake` — Name fixing utility
 
 ## Known Issues
 
@@ -177,3 +227,6 @@ DELETE FROM padas WHERE dictionary_id BETWEEN 11 AND 78;
 DELETE FROM dictionaries WHERE id BETWEEN 11 AND 78;
 ```
 Then run `rails dictionaries:import_into_padas`.
+
+**Q: How do I check if a dictionary has already been imported?**
+A: The stardict import (`rails indic_dict:import`) now checks `dict.padas.exists?` before importing — dictionaries with existing entries are skipped automatically.

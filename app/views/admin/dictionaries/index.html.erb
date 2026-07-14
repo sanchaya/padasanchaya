@@ -1,5 +1,25 @@
 <h2>ನಿಘಂಟುಗಳು</h2>
 
+<%# Summary cards %>
+<div style="display: flex; gap: 15px; margin: 20px 0; flex-wrap: wrap;">
+  <div style="flex: 1; min-width: 150px; background: #e3f2fd; padding: 15px; border-radius: 8px; text-align: center; border-left: 4px solid #1565c0;">
+    <div style="font-size: 28px; font-weight: bold; color: #1565c0;"><%= @total_dictionaries %></div>
+    <div style="font-size: 13px; color: #555;">ಒಟ್ಟು ನಿಘಂಟುಗಳು</div>
+  </div>
+  <div style="flex: 1; min-width: 150px; background: #e8f5e9; padding: 15px; border-radius: 8px; text-align: center; border-left: 4px solid #2e7d32;">
+    <div style="font-size: 28px; font-weight: bold; color: #2e7d32;"><%= number_with_delimiter(@total_entries) %></div>
+    <div style="font-size: 13px; color: #555;">ಒಟ್ಟು ನಮೂದುಗಳು</div>
+  </div>
+  <div style="flex: 1; min-width: 150px; background: #fff3e0; padding: 15px; border-radius: 8px; text-align: center; border-left: 4px solid #e65100;">
+    <div style="font-size: 28px; font-weight: bold; color: #e65100;"><%= number_with_delimiter(@total_pos_tags) %></div>
+    <div style="font-size: 13px; color: #555;">ಪದವರ್ಗ ಟ್ಯಾಗ್‌ಗಳು</div>
+  </div>
+  <div style="flex: 1; min-width: 150px; background: #fce4ec; padding: 15px; border-radius: 8px; text-align: center; border-left: 4px solid #c62828;">
+    <div style="font-size: 28px; font-weight: bold; color: #c62828;"><%= number_with_delimiter(@total_root_languages) %></div>
+    <div style="font-size: 13px; color: #555;">ಮೂಲ ಭಾಷೆ ಟ್ಯಾಗ್‌ಗಳು</div>
+  </div>
+</div>
+
 <table class="table table-striped" style="font-size: 13px;">
   <thead>
     <tr>
@@ -11,6 +31,8 @@
       <th>ಪ್ರಕಾಶಕರು</th>
       <th>ವರ್ಷ</th>
       <th>ನಮೂದುಗಳು</th>
+      <th>ಪದವರ್ಗ</th>
+      <th>ಮೂಲ ಭಾಷೆ</th>
       <th></th>
     </tr>
   </thead>
@@ -24,7 +46,9 @@
         <td><%= dict.category.presence || '-' %></td>
         <td><%= dict.publisher.presence || '-' %></td>
         <td><%= dict.published_year %></td>
-        <td><%= Pada.where(dictionary_id: dict.id).count %></td>
+        <td><%= number_with_delimiter(dict.pada_count) %></td>
+        <td><%= number_with_delimiter(Pada.where(dictionary_id: dict.id).where.not(pos: nil).count) %></td>
+        <td><%= number_with_delimiter(Pada.where(dictionary_id: dict.id).where.not(root_language: nil).count) %></td>
         <td>
           <%= link_to 'ನೋಡಿ', admin_dictionary_path(dict), class: 'btn btn-xs btn-primary' %>
           <%= link_to 'ಸಂಪಾದಿಸು', edit_admin_dictionary_path(dict), class: 'btn btn-xs btn-warning' %>

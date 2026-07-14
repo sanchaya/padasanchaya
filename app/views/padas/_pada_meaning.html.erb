@@ -15,9 +15,19 @@
             <h5 style="font-size: 18px; margin-bottom: 5px;"><strong><%= meaning.word %></strong></h5>
           <% end %>
           <p><span class="word-meaning" style="font-size: 20px;"><%= meaning.meaning %></span></p>
-          <% if meaning.pos.present? %>
-            <p><span class="word-description" style="font-size: 13px;"><%= meaning.pos %></span></p>
-          <% end %>
+
+          <%# Grammar tags row %>
+          <div style="margin: 5px 0; display: flex; flex-wrap: wrap; gap: 5px;">
+            <% if meaning.pos.present? %>
+              <span style="display: inline-block; background: #e3f2fd; padding: 2px 8px; border-radius: 4px; font-size: 12px; color: #1565c0;"><%= meaning.pos %></span>
+            <% end %>
+            <% if meaning.root_language.present? %>
+              <span style="display: inline-block; background: #fce4ec; padding: 2px 8px; border-radius: 4px; font-size: 12px; color: #c62828;"><%= meaning.root_language %></span>
+            <% end %>
+            <% if meaning.kannada_pronunciation.present? %>
+              <span style="display: inline-block; background: #f3e5f5; padding: 2px 8px; border-radius: 4px; font-size: 12px; color: #7b1fa2;">/<%= meaning.kannada_pronunciation %>/</span>
+            <% end %>
+          </div>
           
           <% if Setting.get('show_dictionary_names') == 'true' && meaning.dictionary.try(:show_name_in_search?) %>
             <p style="font-size: 11px; color: #888; margin: 5px 0 2px 0;">
@@ -35,9 +45,6 @@
             <% if meaning.department.present? %>
               <p style="font-size: 12px; color: #555; margin: 3px 0;"><strong>ವಿಭಾಗ:</strong> <%= meaning.department %></p>
             <% end %>
-            <% if meaning.kannada_pronunciation.present? %>
-              <p style="font-size: 12px; color: #555; margin: 3px 0;"><strong>ಉಚ್ಚಾರಣ:</strong> <%= meaning.kannada_pronunciation %></p>
-            <% end %>
             <% if meaning.short_description.present? %>
               <p style="font-size: 12px; color: #555; margin: 3px 0;"><strong>ಸಂಕ್ಷಿಪ್ತ ವಿವರಣೆ:</strong> <%= meaning.short_description %></p>
             <% end %>
@@ -46,6 +53,12 @@
             <% end %>
             <% if meaning.administrative_word.present? %>
               <p style="font-size: 12px; color: #555; margin: 3px 0;"><strong>ಆಡಳಿತ ಪದ:</strong> <%= meaning.administrative_word %></p>
+            <% end %>
+            <% if meaning.root_word.present? %>
+              <p style="font-size: 12px; color: #555; margin: 3px 0;"><strong>ಮೂಲ ಪದ:</strong> <%= meaning.root_word %></p>
+            <% end %>
+            <% if meaning.cognates.present? %>
+              <p style="font-size: 12px; color: #e91e63; margin: 3px 0;"><strong>ಸಹಜ ಪದಗಳು:</strong> <%= meaning.cognates %></p>
             <% end %>
           <% end %>
           

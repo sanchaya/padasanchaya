@@ -23,6 +23,7 @@ Rails.application.routes.draw do
     get 'dashboard', to: 'dashboard#index'
     get 'settings', to: 'dashboard#settings', as: :settings
     post 'settings', to: 'dashboard#update_settings'
+    post 'settings/password', to: 'dashboard#update_password', as: :update_password
 
     resources :community_entries, except: [:new, :create]
 

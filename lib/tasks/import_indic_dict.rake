@@ -97,13 +97,6 @@ namespace :indic_dict do
       language_id: 1,
       meaning_language_id: 1
     },
-    maisUru_vishvakosha: {
-      path: 'kn-head/kn-entries/maisUru-vishvakosha/maisUru-vishvakosha.babylon',
-      name: 'Maisuru Vishvakosha (kn-kn)',
-      description: 'Maisuru Vishvakosha Kannada-Kannada dictionary from indic-dict/stardict-kannada',
-      language_id: 1,
-      meaning_language_id: 1
-    },
     pampana_nuDi_gaNi: {
       path: 'kn-head/kn-entries/pampana-nuDi-gaNi/pampana-nuDi-gaNi.babylon',
       name: 'Pampana Nudi Gani (kn-kn)',
@@ -171,12 +164,22 @@ namespace :indic_dict do
       d.description = config[:description]
     end
 
+    if dict.padas.exists?
+      puts "  Already imported (#{dict.padas.count} entries). Skipping."
+      return
+    end
+
     format = config[:format] || :babylon
     file_path = File.join(temp_dir, File.basename(config[:path]))
     url = "#{RAW_BASE}/#{config[:path]}"
 
-    puts "Downloading #{url}..."
-    download_file(url, file_path)
+    begin
+      puts "Downloading #{url}..."
+      download_file(url, file_path)
+    rescue OpenURI::HTTPError => e
+      puts "  #{e.message} — skipping #{config[:name]}"
+      return
+    end
 
     case format
     when :babylon

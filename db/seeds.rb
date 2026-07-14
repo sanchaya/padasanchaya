@@ -29,3 +29,15 @@ dialects.each do |attrs|
 end
 
 puts "Seeded #{Dialect.count} dialects"
+
+# Default admin user (created only if no admin exists)
+if AdminUser.count == 0
+  AdminUser.create!(
+    username: 'admin',
+    email: 'admin@example.com',
+    name: 'Admin',
+    password: 'test123',
+    password_confirmation: 'test123'
+  )
+  puts "Created default admin user (username: admin, password: test123)"
+end

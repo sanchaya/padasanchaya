@@ -12,6 +12,7 @@ A comprehensive Kannada dictionary portal aggregating multiple dictionary source
 - **Per-dictionary metadata**: Core name, type, category, publisher, year, multilingual flag
 - **Selective dictionary name display**: Global + per-dictionary toggle for showing dictionary names in search results
 - **Voice input**: Speech-to-text for Kannada (Chrome, HTTPS only)
+- **POS and grammar tags**: Part-of-speech, root language, and pronunciation badges on search results
 - **Color-coded results**: Each dictionary source has a distinct colored underline
 - **Kannada IME**: Built-in input method editor for Kannada script
 - **SEO optimized**: Schema.org structured data, sitemap, Open Graph, Twitter Cards, breadcrumbs
@@ -104,7 +105,11 @@ rails db:migrate RAILS_ENV=production
 ### Dictionary Management
 - Edit name, core_name, description, type, category, publisher, year
 - Toggle `show_name_in_search` per dictionary
-- View pada entries per dictionary with search
+- View pada entries per dictionary with search and pagination
+- Summary stats cards (total entries, POS count, root language count, synonyms)
+- POS distribution bar chart (top 10 tags)
+- Root language distribution bar chart (top 10 origins)
+- Per-dictionary POS and root language counts in the index table
 
 ### Global Settings
 - `show_dictionary_names` — Master toggle for showing dictionary names in search results

@@ -31,7 +31,7 @@
               <li><%= link_to 'ಲಾಗೌಟ್', admin_logout_path, method: :delete %></li>
             </ul>
             <p class="navbar-text navbar-right" style="color: #ccc; font-size: 12px;">
-              <%= current_admin&.name || current_admin&.email %>
+              <%= current_admin&.name || current_admin&.username %>
             </p>
           </div>
         <% end %>

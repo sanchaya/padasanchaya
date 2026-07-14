@@ -1,6 +1,13 @@
 class Admin::DictionariesController < Admin::BaseController
   def index
-    @dictionaries = Dictionary.order(:name)
+    @dictionaries = Dictionary.left_joins(:padas)
+                              .select('dictionaries.*, COUNT(padas.id) as pada_count')
+                              .group('dictionaries.id')
+                              .order(:name)
+    @total_entries = Pada.count
+    @total_dictionaries = Dictionary.count
+    @total_pos_tags = Pada.where.not(pos: nil).count
+    @total_root_languages = Pada.where.not(root_language: nil).count
   end
 
   def show
@@ -8,6 +15,13 @@ class Admin::DictionariesController < Admin::BaseController
     @entries = Pada.where(dictionary_id: params[:id]).order(:word)
     @entries = @entries.where("word LIKE ?", "%#{params[:search].unicode_normalize(:nfkc)}%") if params[:search].present?
     @entries = @entries.page(params[:page]).per(50) if @entries.respond_to?(:page)
+
+    @total_padas = Pada.where(dictionary_id: @dictionary.id).count
+    @pos_distribution = Pada.where(dictionary_id: @dictionary.id).where.not(pos: nil).group(:pos).order('count_id DESC').limit(10).count
+    @root_language_distribution = Pada.where(dictionary_id: @dictionary.id).where.not(root_language: nil).group(:root_language).order('count_id DESC').limit(10).count
+    @entries_with_pos = Pada.where(dictionary_id: @dictionary.id).where.not(pos: nil).count
+    @entries_with_root_lang = Pada.where(dictionary_id: @dictionary.id).where.not(root_language: nil).count
+    @entries_with_synonyms = Pada.where(dictionary_id: @dictionary.id).where.not(synonyms: nil).count
   end
 
   def edit

@@ -6,12 +6,12 @@ class Admin::SessionsController < ApplicationController
   end
 
   def create
-    admin = AdminUser.find_by(email: params[:email])
+    admin = AdminUser.find_by(username: params[:username])
     if admin&.authenticate(params[:password])
       session[:admin_user_id] = admin.id
       redirect_to admin_dashboard_path, notice: 'ಲಾಗಿನ್ ಯಶಸ್ವಿ'
     else
-      flash.now[:alert] = 'ಇಮೇಲ್ ಅಥವಾ ಪಾಸ್ವರ್ಡ್ ತಪ್ಪಾಗಿದೆ'
+      flash.now[:alert] = 'ಬಳಕೆದಾರ ಹೆಸರು ಅಥವಾ ಪಾಸ್ವರ್ಡ್ ತಪ್ಪಾಗಿದೆ'
       render :new
     end
   end

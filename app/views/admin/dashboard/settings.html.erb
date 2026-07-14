@@ -19,3 +19,26 @@
     <%= link_to 'ಹಿಂದೆ', admin_dashboard_path, class: 'btn btn-default btn-lg' %>
   </div>
 <% end %>
+
+<h3 style="margin-top: 40px;">ಪಾಸ್ವರ್ಡ್ ಬದಲಾಯಿಸಿ</h3>
+
+<%= form_tag admin_update_password_path, method: :post, style: 'max-width: 500px;' do %>
+  <div style="background: #f9f9f9; padding: 20px; border-radius: 8px; margin: 20px 0;">
+    <div class="form-group" style="margin-bottom: 15px;">
+      <label style="font-weight: bold;">ಪ್ರಸ್ತುತ ಪಾಸ್ವರ್ಡ್</label>
+      <%= password_field_tag :current_password, '', class: 'form-control', required: true, style: 'font-size: 16px;' %>
+    </div>
+    <div class="form-group" style="margin-bottom: 15px;">
+      <label style="font-weight: bold;">ಹೊಸ ಪಾಸ್ವರ್ಡ್</label>
+      <%= password_field_tag :new_password, '', class: 'form-control', required: true, style: 'font-size: 16px;' %>
+    </div>
+    <div class="form-group" style="margin-bottom: 15px;">
+      <label style="font-weight: bold;">ಹೊಸ ಪಾಸ್ವರ್ಡ್ ದೃಢೀಕರಿಸಿ</label>
+      <%= password_field_tag :confirm_password, '', class: 'form-control', required: true, style: 'font-size: 16px;' %>
+    </div>
+  </div>
+
+  <div style="text-align: center;">
+    <%= submit_tag 'ಪಾಸ್ವರ್ಡ್ ಬದಲಾಯಿಸಿ', class: 'btn btn-primary btn-lg' %>
+  </div>
+<% end %>
