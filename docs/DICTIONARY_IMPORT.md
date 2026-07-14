@@ -91,6 +91,42 @@ This:
 | 11-121 | ZIP Dictionaries | 92 (from ZIP file) |
 | 122+ | Wiktionary | Separate table |
 
+## Indic-Dict Stardict-Kannada Import
+
+The [indic-dict/stardict-kannada](https://github.com/indic-dict/stardict-kannada) repository
+contains Kannada dictionaries in Babylon (.babylon), TSV, and CSV formats.
+
+### Dictionaries imported
+
+| Dictionary | Source | Type |
+|------------|--------|------|
+| Alar (kn-en) | `kn-head/en-entries/alar/alar.babylon` | Babylon |
+| Kittel (kn-en) | `kn-head/en-entries/kittel/kittel.babylon` | Babylon |
+| Mysore University (en-kn) | `en-head/mysore_uni_eng_kn/mysore_uni_eng_kn.babylon` | Babylon |
+| Keshiraja (kn-en) | `kn-head/en-entries/keshirAja/keshirAja.babylon` | Babylon |
+| Ka-ga-pa 2014 (kn-en) | `kn-head/en-entries/ka-ga-pa_2014/ka-ga-pa_2014.babylon` | Babylon |
+| Maisuru Vishvakosha 1-4 (kn-kn) | `kn-head/kn-entries/maisUru-vishvakosha_{1..4}/` | Babylon |
+| Champu Nudi Gannadi (kn-kn) | `kn-head/kn-entries/champU-nuDi-gannaDi/champU-nuDi-gannaDi.babylon` | Babylon |
+| Hale Gannada Pada Sampada (kn-kn) | `kn-head/kn-entries/haLe-gannaDa-pada-sampada/haLe-gannaDa-pada-sampada.babylon` | Babylon |
+| Janapada Vastu Kosha (kn-kn) | `kn-head/kn-entries/janapada-vastu-kosha/janapada-vastu-kosha.babylon` | Babylon |
+| Kumaravyasa (kn-kn) | `kn-head/kn-entries/kumAravyAsa/kumAravyAsa.babylon` | Babylon |
+| Maisuru Vishvakosha (kn-kn) | `kn-head/kn-entries/maisUru-vishvakosha/maisUru-vishvakosha.babylon` | Babylon |
+| Pampana Nudi Gani (kn-kn) | `kn-head/kn-entries/pampana-nuDi-gaNi/pampana-nuDi-gaNi.babylon` | Babylon |
+| Sanxipta Kannada Nighantu (kn-kn) | `kn-head/kn-entries/sanxipta-kannaDa-nighaNTu-ka-sa-pa/sanxipta-kannaDa-nighaNTu-ka-sa-pa.babylon` | Babylon |
+| Shrivatsa Nighantu (kn-kn) | `kn-head/kn-entries/shrIvatsa-nighaNTu/shrIvatsa-nighaNTu.babylon` | Babylon |
+| Kumaravyasa Kosha (kn-kn) | `kosha-mUlagaLu/kumAravyAsa-kosha/kumAravyAsa-kosha.tsv` | TSV |
+| Mankutimma Kagga (kn-en) | `kn-kAvya/kagga/kagga.csv` | CSV |
+| Kumaravyasa Kosha (kn-kn) | `kosha-mUlagaLu/kumAravyAsa-kosha/kumAravyAsa-kosha.tsv` | TSV |
+
+### Import command
+
+```bash
+rails indic_dict:import RAILS_ENV=production
+```
+
+This downloads each dictionary file from GitHub, parses it, and inserts entries into
+the `padas` table (deduplicating by word/meaning/dictionary_id).
+
 ## Stats Page
 
 The `/stats` page aggregates data from all sources:

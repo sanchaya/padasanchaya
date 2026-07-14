@@ -19,8 +19,8 @@ namespace :dictionaries do
 
       count = 0
       DictionaryEntry.where(dict_id: dict_id).find_each do |entry|
-        word = entry.kannada_word.presence || entry.english_word.presence
-        meaning = entry.kannada_meaning.presence || entry.english_meaning.presence || ''
+        word = (entry.kannada_word.presence || entry.english_word.presence)&.unicode_normalize(:nfkc)
+        meaning = (entry.kannada_meaning.presence || entry.english_meaning.presence || '').unicode_normalize(:nfkc)
 
         next if word.blank?
 

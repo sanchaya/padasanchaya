@@ -5,6 +5,7 @@ class PadasController < ApplicationController
   # GET /padas.json
   def index
     if params[:search] && !params[:search].blank?
+      params[:search] = params[:search].unicode_normalize(:nfkc)
       @page_title = "#{params[:search]} - #{@page_title}"
       @page_description = "ಕನ್ನಡ ಪದ '#{params[:search]}' ನ ಅರ್ಥ, ವ್ಯಾಖ್ಯಾನ, ಬಳಕೆ ಮತ್ತು ಹೆಚ್ಚಿನ ಮಾಹಿತಿ. ಅನೇಕ ಕನ್ನಡ ನಿಘಂಟುಗಳಲ್ಲಿ ಹುಡುಕಿ."
       @canonical_url = root_url(search: params[:search])

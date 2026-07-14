@@ -23,12 +23,6 @@
             <p style="font-size: 11px; color: #888; margin: 5px 0 2px 0;">
               <span style="display: inline-block; background: <%= dictionary_color(meaning.dictionary_id) %>22; border-left: 3px solid <%= dictionary_color(meaning.dictionary_id) %>; padding: 1px 8px; border-radius: 2px;">
                 <%= meaning.dictionary.name %>
-                <% if meaning.dictionary.publisher.present? %>
-                  · <%= meaning.dictionary.publisher %>
-                <% end %>
-                <% if meaning.dictionary.published_year.present? %>
-                  · <%= meaning.dictionary.published_year %>
-                <% end %>
               </span>
             </p>
           <% end %>

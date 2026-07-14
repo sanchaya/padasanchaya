@@ -7,8 +7,8 @@ class JanaSanchayaEntry < ApplicationRecord
 
   has_many :jana_sanchaya_votes, dependent: :destroy
 
-  scope :search, ->(word) { where("word = ? OR meaning LIKE ?", word, "%#{word}%") }
-  scope :similar_search, ->(word) { where("word LIKE ? OR meaning LIKE ?", "%#{word}%", "%#{word}%") }
+  scope :search, ->(word) { word = word.unicode_normalize(:nfkc) if word; where("word = ? OR meaning LIKE ?", word, "%#{word}%") }
+  scope :similar_search, ->(word) { word = word.unicode_normalize(:nfkc) if word; where("word LIKE ? OR meaning LIKE ?", "%#{word}%", "%#{word}%") }
   scope :ranked, -> { order(votes_up: :desc, created_at: :desc) }
   scope :approved, -> { where(status: 'approved') }
   scope :dialect_entries, -> { where(is_dialect: true) }

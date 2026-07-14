@@ -9,7 +9,7 @@ namespace :import do
     Pada.delete_all
     Dictionary.delete_all
 
-    zip_path = File.expand_path('../padakanaja_dictionaries.zip', __dir__)
+    zip_path = File.expand_path('../dictionaries.zip', __dir__)
     unless File.exist?(zip_path)
       puts "Zip file not found at #{zip_path}"
       exit 1
@@ -111,20 +111,20 @@ namespace :import do
 
           attrs = {
             dictionary: dictionary,
-            word: word.strip,
-            meaning: meaning.strip,
-            pos: pos,
-            synonyms: synonyms.strip.empty? ? nil : synonyms,
-            department: department.strip.empty? ? nil : department,
-            kannada_pronunciation: kannada_pronunciation.strip.empty? ? nil : kannada_pronunciation,
-            short_description: short_description.strip.empty? ? nil : short_description,
-            long_description: long_description.strip.empty? ? nil : long_description,
-            administrative_word: administrative_word.strip.empty? ? nil : administrative_word,
+            word: word.strip.unicode_normalize(:nfkc),
+            meaning: meaning.strip.unicode_normalize(:nfkc),
+            pos: pos.unicode_normalize(:nfkc),
+            synonyms: synonyms.strip.empty? ? nil : synonyms.unicode_normalize(:nfkc),
+            department: department.strip.empty? ? nil : department.unicode_normalize(:nfkc),
+            kannada_pronunciation: kannada_pronunciation.strip.empty? ? nil : kannada_pronunciation.unicode_normalize(:nfkc),
+            short_description: short_description.strip.empty? ? nil : short_description.unicode_normalize(:nfkc),
+            long_description: long_description.strip.empty? ? nil : long_description.unicode_normalize(:nfkc),
+            administrative_word: administrative_word.strip.empty? ? nil : administrative_word.unicode_normalize(:nfkc),
             language_id: language_id,
             meaning_language_id: meaning_language_id
           }
           if Pada.column_names.include?('subject')
-            attrs[:subject] = subject_raw.strip.empty? ? nil : subject_raw
+            attrs[:subject] = subject_raw.strip.empty? ? nil : subject_raw.unicode_normalize(:nfkc)
           end
           dictionary.padas.create!(attrs)
         end

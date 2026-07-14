@@ -6,7 +6,7 @@ class Admin::DictionariesController < Admin::BaseController
   def show
     @dictionary = Dictionary.find(params[:id])
     @entries = Pada.where(dictionary_id: params[:id]).order(:word)
-    @entries = @entries.where("word LIKE ?", "%#{params[:search]}%") if params[:search].present?
+    @entries = @entries.where("word LIKE ?", "%#{params[:search].unicode_normalize(:nfkc)}%") if params[:search].present?
     @entries = @entries.page(params[:page]).per(50) if @entries.respond_to?(:page)
   end
 

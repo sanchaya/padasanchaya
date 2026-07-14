@@ -9,14 +9,17 @@ class Pada < ApplicationRecord
   ].freeze
 
   def self.search(word)
+    word = word.unicode_normalize(:nfkc) if word
     left_joins(:dictionary).where(word: word)
   end
 
   def self.similar_search(word)
+    word = word.unicode_normalize(:nfkc) if word
     where("word LIKE ?", "%#{word}%")
   end
 
   def self.search_by_meaning(word)
+    word = word.unicode_normalize(:nfkc) if word
     where("meaning LIKE ?", "%#{word}%")
   end
 
