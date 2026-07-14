@@ -4,6 +4,7 @@
   <p><strong>Total Dictionaries:</strong> <%= @total_dictionaries %></p>
   <p><strong>Wiktionary Entries:</strong> <%= number_with_delimiter(@wiktionary_count || 0) %></p>
   <p><strong>Vachana Sanchaya:</strong> <%= number_with_delimiter(@vachana_count || 0) %></p>
+  <p><strong>Indic-Dict Stardict:</strong> <%= number_with_delimiter(@stardict_count || 0) %></p>
   <p><strong>Total Entries (Padas):</strong> <%= number_with_delimiter(@total_all_entries || 0) %></p>
 </div>
 
@@ -50,6 +51,30 @@
       <td align="right"><%= number_with_delimiter(@vachana_count || 0) %></td>
       <td><a href="https://vachana.sanchaya.net" target="_blank" rel="noopener">vachana.sanchaya.net</a></td>
     </tr>
+  </tbody>
+</table>
+
+<h3>Indic-Dict Stardict</h3>
+<table border="1" cellpadding="5" style="border-collapse: collapse; width: 100%; margin-bottom: 30px;">
+  <thead style="background-color: #fff3e0;">
+    <tr>
+      <th>Dictionary</th>
+      <th>Total Entries</th>
+      <th>Source</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if @stardict_dictionaries.present? %>
+      <% @stardict_dictionaries.each do |dict| %>
+        <tr style="border-left: 4px solid #ff9800;">
+          <td><%= dict.name %></td>
+          <td align="right"><%= number_with_delimiter(@stardict_counts[dict.id] || 0) %></td>
+          <td><a href="https://github.com/indic-dict/stardict-kannada" target="_blank" rel="noopener">indic-dict/stardict-kannada</a></td>
+        </tr>
+      <% end %>
+    <% else %>
+      <tr><td colspan="3" align="center">No indic-dict dictionaries imported yet. Run <code>rails indic_dict:import</code>.</td></tr>
+    <% end %>
   </tbody>
 </table>
 

@@ -18,5 +18,11 @@ class StatsController < ApplicationController
     # Vachana Sanchaya stats
     vachana_dict = Dictionary.where('name LIKE ?', '%vachana%').first
     @vachana_count = vachana_dict ? Pada.where(dictionary_id: vachana_dict.id).count : 0
+
+    # Indic-Dict Stardict stats
+    stardict_dicts = Dictionary.where('description LIKE ?', '%indic-dict/stardict-kannada%')
+    @stardict_dictionaries = stardict_dicts
+    @stardict_counts = stardict_dicts.empty? ? {} : Pada.where(dictionary_id: stardict_dicts.pluck(:id)).group(:dictionary_id).count
+    @stardict_count = @stardict_counts.values.sum
   end
 end
