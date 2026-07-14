@@ -100,7 +100,7 @@ contains Kannada dictionaries in Babylon (.babylon), TSV, and CSV formats.
 
 | Dictionary | Source | Type |
 |------------|--------|------|
-| Alar (kn-en) | `kn-head/en-entries/alar/alar.babylon` | Babylon |
+| Alar (kn-en) (ODbL) | `kn-head/en-entries/alar/alar.babylon` — primary source: [alar-dict/data](https://github.com/alar-dict/data) | Babylon |
 | Kittel (kn-en) | `kn-head/en-entries/kittel/kittel.babylon` | Babylon |
 | Mysore University (en-kn) | `en-head/mysore_uni_eng_kn/mysore_uni_eng_kn.babylon` | Babylon |
 | Keshiraja (kn-en) | `kn-head/en-entries/keshirAja/keshirAja.babylon` | Babylon |
@@ -114,7 +114,6 @@ contains Kannada dictionaries in Babylon (.babylon), TSV, and CSV formats.
 | Pampana Nudi Gani (kn-kn) | `kn-head/kn-entries/pampana-nuDi-gaNi/pampana-nuDi-gaNi.babylon` | Babylon |
 | Sanxipta Kannada Nighantu (kn-kn) | `kn-head/kn-entries/sanxipta-kannaDa-nighaNTu-ka-sa-pa/sanxipta-kannaDa-nighaNTu-ka-sa-pa.babylon` | Babylon |
 | Shrivatsa Nighantu (kn-kn) | `kn-head/kn-entries/shrIvatsa-nighaNTu/shrIvatsa-nighaNTu.babylon` | Babylon |
-| Kumaravyasa Kosha (kn-kn) | `kosha-mUlagaLu/kumAravyAsa-kosha/kumAravyAsa-kosha.tsv` | TSV |
 | Mankutimma Kagga (kn-en) | `kn-kAvya/kagga/kagga.csv` | CSV |
 | Kumaravyasa Kosha (kn-kn) | `kosha-mUlagaLu/kumAravyAsa-kosha/kumAravyAsa-kosha.tsv` | TSV |
 

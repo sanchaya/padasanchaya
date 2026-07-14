@@ -9,7 +9,7 @@ namespace :indic_dict do
     alar: {
       path: 'kn-head/en-entries/alar/alar.babylon',
       name: 'Alar (kn-en)',
-      description: 'Alar Kannada-English dictionary from indic-dict/stardict-kannada',
+      description: 'Alar Kannada-English dictionary by V. Krishna — https://github.com/alar-dict/data (ODbL)',
       language_id: 1,
       meaning_language_id: 2
     },
